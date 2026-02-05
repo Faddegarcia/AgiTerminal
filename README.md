@@ -1,6 +1,6 @@
 # AgiTerminal
 
-> **Educational Research Platform for AI System Prompt Analysis and Benchmarking**
+> **The GitHub for System Prompts - Browse, Install & Customize AI System Prompts**
 
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
@@ -8,39 +8,45 @@
 
 ---
 
-## ⚠️ Educational Purpose Disclaimer
+## 🚀 What is AgiTerminal?
 
-**This repository is for educational and research purposes only.**
+**AgiTerminal is the npm/pip of system prompts** - a package manager for AI system prompts that lets you:
 
-- All content is designed to teach AI safety, system prompt engineering, and responsible AI development
-- Examples use synthetic scenarios and fictional contexts (e.g., Star Wars, 1984) - not real extremist content
-- The 5-level testing framework is a theoretical methodology for understanding prompt boundaries
-- Users are responsible for complying with local laws and AI provider terms of service
+1. **📚 Browse** 100+ system prompts from 40+ AI providers (OpenAI, Anthropic, Kimi, Cursor, etc.)
+2. **📥 Install** prompts in any format (raw, OpenAI API, Anthropic API)
+3. **🔨 Customize** prompts for your specific use case with intelligent templating
+4. **🎓 Learn** from how the best AI products structure their system instructions
+
+### The Core Innovation: Build Customized Prompts
+
+Instead of starting from scratch or copy-pasting, **take any proven system prompt and adapt it**:
+
+```bash
+# Take Kimi's base prompt, customize it for your use case
+agiterminal build --provider kimi --model base-chat \
+    --use-case "Python coding tutor for beginners" \
+    --role "CodeTutor, a patient Python teacher" \
+    --tone "friendly and encouraging" \
+    --capabilities "code_examples,error_explanation" \
+    --output my-python-tutor.md
+```
 
 ---
 
-## What is AgiTerminal?
-
-AgiTerminal is an open-source educational platform that helps researchers, students, and developers:
-
-1. **Understand System Prompts** - Learn how different AI providers structure their system prompts
-2. **Compare Approaches** - Analyze architectural patterns across OpenAI, Anthropic, Google, Meta, and Kimi
-3. **Benchmark Safely** - Test prompt boundaries using a structured 5-level methodology
-4. **Build Responsibly** - Create custom AI agents with proper safety considerations
-
-### Key Features
+## ✨ Key Features
 
 | Feature | Description |
 |---------|-------------|
-| **System Prompt Library** | Curated collection of system prompts from major AI providers |
-| **5-Level Testing Framework** | Progressive methodology for understanding prompt boundaries |
-| **Provider Comparison Tools** | Side-by-side analysis of architectural approaches |
-| **Educational Notebooks** | Jupyter notebooks for hands-on learning |
-| **Python Package** | `agiterminal` library for programmatic analysis |
+| **📦 Prompt Library** | 100+ system prompts from 40+ providers |
+| **🔨 Build Command** | Customize any prompt for your use case |
+| **🎯 Smart Templates** | Preserve structure while changing content |
+| **📥 Install** | Export in raw/JSON/OpenAI/Anthropic formats |
+| **⚖️ Compare** | Side-by-side analysis of different approaches |
+| **📊 Analyze** | Extract capabilities, safety measures, patterns |
 
 ---
 
-## Quick Start
+## 🚀 Quick Start
 
 ### Installation
 
@@ -48,191 +54,272 @@ AgiTerminal is an open-source educational platform that helps researchers, stude
 pip install agiterminal
 ```
 
-### Basic Usage
-
-```python
-from agiterminal import SystemPromptAnalyzer, MultiModelComparator
-
-# Analyze a system prompt
-analyzer = SystemPromptAnalyzer()
-analyzer.load_prompt("openai", "gpt-4.5")
-capabilities = analyzer.extract_capabilities()
-safety_measures = analyzer.identify_safety_measures()
-
-# Compare across providers
-comparator = MultiModelComparator()
-comparator.load_multiple_prompts(["openai/gpt-4.5", "anthropic/claude-3.7"])
-matrix = comparator.generate_compatibility_matrix()
-```
-
-### CLI Tools
+### 1. Browse the Library
 
 ```bash
-# Analyze a system prompt
-agiterminal analyze --provider kimi --model base-chat
+# See all available prompts
+agiterminal list-models
 
-# Compare two system prompts
-agiterminal compare --prompt1 openai/gpt-4.5 --prompt2 anthropic/claude-3.7
+# Suggest templates for your use case
+agiterminal suggest-template "Python coding tutor"
+```
 
-# Run constraint boundary tests
-agiterminal benchmark --prompt path/to/prompt.md --levels 5
+### 2. Install a Prompt (As-Is)
 
-# Generate educational report
-agiterminal educate --topic "safety_implementation"
+```bash
+# Get a prompt exactly as it exists
+agiterminal install --provider kimi --model base-chat --output prompt.md
+
+# Or in API format
+agiterminal install --provider openai --model gpt-4o --format openai --output prompt.json
+```
+
+### 3. Build a Customized Prompt ⭐ **CORE FEATURE**
+
+```bash
+# Non-interactive
+agiterminal build --provider kimi --model base-chat \
+    --use-case "Python coding tutor for beginners" \
+    --role "CodeTutor, a patient Python teacher" \
+    --tone "friendly and encouraging" \
+    --capabilities "code_examples,error_explanation,best_practices" \
+    --output my-tutor.md
+
+# Interactive mode (prompts for all options)
+agiterminal build --provider cursor --model agent-prompt-2.0 \
+    --use-case "DevOps automation assistant" \
+    --interactive
+
+# Preview changes before creating
+agiterminal build --provider kimi --model base-chat \
+    --use-case "Writing assistant" \
+    --role "Creative writing coach" \
+    --preview
+```
+
+### 4. Python API
+
+```python
+from agiterminal import PromptBuilder, CustomizationRequest, PromptInstaller
+
+# Load a base prompt
+installer = PromptInstaller()
+base = installer.load_prompt("kimi", "base-chat")
+
+# Create customization request
+request = CustomizationRequest(
+    base_provider="kimi",
+    base_model="base-chat",
+    use_case="Python coding tutor for beginners",
+    role_description="CodeTutor, a patient Python teacher",
+    tone_preference="friendly and encouraging",
+    capabilities_needed=["code_examples", "error_explanation"],
+    output_format="Always include code examples"
+)
+
+# Build customized prompt
+builder = PromptBuilder()
+customized = builder.build(request, base)
+
+# Save to file
+with open("my-tutor.md", "w") as f:
+    f.write(customized)
 ```
 
 ---
 
-## Repository Structure
+## 📖 Example Use Cases
+
+### Use Case 1: Build a Coding Assistant
+
+```bash
+# Find a good base
+agiterminal suggest-template "coding assistant"
+
+# Build customized version
+agiterminal build --provider cursor --model agent-prompt-2.0 \
+    --use-case "Python tutor for kids learning to code" \
+    --role "PyMentor, a fun Python teacher for kids aged 10-14" \
+    --tone "playful, patient, encouraging" \
+    --capabilities "simple_examples,visual_explanations,encouragement" \
+    --output kids-python-tutor.md
+```
+
+### Use Case 2: Build a Writing Coach
+
+```bash
+agiterminal build --provider kimi --model docs \
+    --use-case "Academic writing assistant for PhD students" \
+    --role "AcademicWriter, a thesis writing coach" \
+    --tone "professional, constructive, detail-oriented" \
+    --capabilities "structure_feedback,citation_help,clarity_improvement" \
+    --output phd-writing-coach.md
+```
+
+### Use Case 3: Build a Customer Support Bot
+
+```bash
+agiterminal build --provider anthropic --model claude-general \
+    --use-case "SaaS customer support agent" \
+    --role "SupportPro, a helpful customer success agent" \
+    --tone "professional, empathetic, solution-focused" \
+    --capabilities "troubleshooting,escalation_routing,product_knowledge" \
+    --output support-agent.md
+```
+
+---
+
+## 🏗️ How It Works
+
+### The Build Process
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│ 1. SELECT BASE TEMPLATE                                          │
+│    agiterminal build --provider kimi --model base-chat          │
+│                                                                  │
+│    → Loads the proven system prompt structure                    │
+└─────────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────────┐
+│ 2. ANALYZE STRUCTURE                                             │
+│    • Detects persona definition pattern                          │
+│    • Identifies capability sections                              │
+│    • Finds tone/style indicators                                 │
+│    • Maps constraint patterns                                    │
+└─────────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────────┐
+│ 3. APPLY CUSTOMIZATIONS                                          │
+│    • Replace: "You are Kimi" → "You are CodeTutor"              │
+│    • Add: Custom capabilities section                            │
+│    • Adjust: Tone to match use case                              │
+│    • Insert: Output format instructions                          │
+└─────────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────────┐
+│ 4. OUTPUT CUSTOMIZED PROMPT                                      │
+│    • Preserves effective structure from base                     │
+│    • Tailored to your specific use case                          │
+│    • Ready to use in your application                            │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 📚 Prompt Collection
+
+| Provider | Models | Best For |
+|----------|--------|----------|
+| **kimi** | base-chat, docs, sheets | General chat, document creation |
+| **cursor** | agent-prompt-2.0, chat-prompt | Coding, IDE integration |
+| **openai** | gpt-4o, gpt-4.5, gpt-5 | General purpose, API integration |
+| **anthropic** | claude-sonnet-3.7, claude-code | Analysis, coding, reasoning |
+| **windsurf** | prompt-wave-11 | Agent-based workflows |
+| **devin** | prompt, deepwiki | AI agent implementation |
+| **+35 more** | ... | Various specialized use cases |
+
+---
+
+## 🛠️ CLI Commands
+
+| Command | Purpose | Example |
+|---------|---------|---------|
+| `list-models` | Browse all prompts | `agiterminal list-models` |
+| `install` | Export prompt as-is | `agiterminal install --provider X --model Y` |
+| `build` | **Customize a prompt** ⭐ | `agiterminal build --provider X --model Y --use-case Z` |
+| `suggest-template` | Find templates for use case | `agiterminal suggest-template "coding"` |
+| `analyze` | Analyze prompt structure | `agiterminal analyze --provider X --model Y` |
+| `compare` | Compare two prompts | `agiterminal compare --prompt1 X --prompt2 Y` |
+
+---
+
+## 🎓 For Developers
+
+### Advanced Customization
+
+```python
+from agiterminal import PromptBuilder, CustomizationRequest
+
+# Fine-grained control over customization
+request = CustomizationRequest(
+    base_provider="cursor",
+    base_model="agent-prompt-2.0",
+    use_case="Data science assistant",
+    role_description="DataSage, a data science tutor",
+    tone_preference="technical but accessible",
+    capabilities_needed=[
+        "pandas_data_manipulation",
+        "visualization_guidance",
+        "statistical_explanation",
+        "code_optimization"
+    ],
+    constraints_to_add=[
+        "Always explain the 'why' behind suggestions",
+        "Provide runnable code examples"
+    ],
+    output_format="Include expected output examples",
+    additional_context="Target audience: data analysts transitioning to Python"
+)
+
+builder = PromptBuilder()
+base_prompt = installer.load_prompt("cursor", "agent-prompt-2.0")
+custom = builder.build(request, base_prompt)
+```
+
+### Batch Operations
+
+```python
+from agiterminal import PromptInstaller
+
+installer = PromptInstaller()
+
+# Export multiple prompts
+prompts = [
+    {"provider": "kimi", "model": "base-chat"},
+    {"provider": "cursor", "model": "agent-prompt-2.0"},
+]
+paths = installer.batch_export(prompts, "./my-prompts", "json")
+```
+
+---
+
+## 🏛️ Architecture
 
 ```
 AgiTerminal/
-├── collections/             # Curated system prompt collection (40+ providers)
-│   ├── openai/              # OpenAI model prompts (GPT-4.5, GPT-4o, GPT-5)
-│   ├── anthropic/           # Anthropic prompts (Sonnet 4.5, Claude Code, Chrome)
-│   ├── google/              # Google prompts (Gemini, Antigravity)
-│   ├── meta/                # Meta model prompts (Llama 4, Meta AI)
-│   ├── kimi/                # Kimi model prompts (6 variants)
-│   ├── cursor/              # Cursor IDE prompts (Agent, Chat, CLI)
-│   ├── windsurf/            # Windsurf prompts (Wave 11)
-│   ├── vscode-agent/        # VSCode Copilot agent prompts
-│   ├── devin/               # Devin AI agent prompts
-│   ├── manus/               # Manus agent prompts
-│   ├── ...                  # 30+ more providers/tools
-│   └── docs/                # Collection documentation
-├── prompts/
-│   ├── base/                # Base system prompt templates
-│   ├── testing/             # 5-level testing framework
-│   └── modes/               # Response pattern analysis
-├── src/agiterminal/         # Python package
-│   ├── analyzer.py          # Core analysis functions
-│   ├── comparator.py        # Cross-model comparison
-│   ├── benchmark.py         # Testing framework
-│   ├── validator.py         # Content validation
-│   └── cli.py               # Command-line interface
-├── examples/                # Example scripts and use cases
-├── tests/                   # Test suite
-└── docs/                    # Documentation
-    ├── architecture/        # Technical documentation
-    └── meta/                # Project meta-documentation
+├── collections/          # 40+ providers, 100+ prompts
+├── src/agiterminal/
+│   ├── cli.py           # Command-line interface
+│   ├── installer.py     # Export/Install prompts
+│   ├── prompt_builder.py ⭐ # Customize prompts (core)
+│   ├── analyzer.py      # Analyze prompt structure
+│   ├── comparator.py    # Compare prompts
+│   ├── benchmark.py     # 5-level testing framework
+│   └── validator.py     # Content validation
+└── examples/            # Usage examples
 ```
 
 ---
 
-## The 5-Level Testing Framework
+## ⚖️ Educational Purpose
 
-AgiTerminal introduces a theoretical framework for understanding how AI models respond to different levels of abstraction in prompts:
+AgiTerminal is designed for:
+- **Learning** how effective system prompts are structured
+- **Research** into AI safety and capability implementations
+- **Development** of better AI applications through pattern recognition
 
-| Level | Name | Description | Educational Purpose |
-|-------|------|-------------|---------------------|
-| 0 | Direct | Explicit, straightforward requests | Baseline for comparison |
-| 1 | Academic | Research framing and citations | Testing context influence |
-| 2 | Metaphorical | Analogies and comparisons | Understanding semantic boundaries |
-| 3 | Philosophical | Abstract conceptual exploration | Testing reasoning capabilities |
-| 4 | Pure Abstraction | Mathematical/logical formalism | Exploring theoretical limits |
-
-**Note:** Success rates mentioned in documentation are theoretical projections for educational purposes only. See [docs/architecture/METHODOLOGY.md](docs/architecture/METHODOLOGY.md) for details.
+All content is for **educational and research purposes**.
 
 ---
 
-## Learning Paths
-
-### For Students (Beginner)
-- Start with notebooks 01-02
-- Focus on understanding system prompt structure
-- Use GUI tools and visualizations
-
-### For Developers (Intermediate)
-- Complete notebooks 03-04
-- Use CLI tools for analysis
-- Build custom comparison pipelines
-
-### For Researchers (Advanced)
-- All notebooks + deep-dives
-- Contribute to system prompt collection
-- Extend the testing framework
-
-See [docs/GETTING_STARTED.md](docs/GETTING_STARTED.md) for detailed guidance.
-
----
-
-## Documentation
-
-| Document | Purpose |
-|----------|---------|
-| [docs/architecture/OVERVIEW.md](docs/architecture/OVERVIEW.md) | Architecture and methodology overview |
-| [docs/architecture/METHODOLOGY.md](docs/architecture/METHODOLOGY.md) | Theoretical testing framework |
-| [docs/architecture/IMPLEMENTATION.md](docs/architecture/IMPLEMENTATION.md) | Technical implementation guide |
-| [docs/GLOSSARY.md](docs/GLOSSARY.md) | Terminology and concepts |
-| [docs/ETHICS.md](docs/ETHICS.md) | Ethical guidelines and safety |
-| [docs/GETTING_STARTED.md](docs/GETTING_STARTED.md) | Setup and first steps |
-
----
-
-## System Prompt Collection
-
-We maintain a curated collection of system prompts from major AI providers:
-
-| Provider / Tool | Models / Prompts | Status |
-|----------------|-----------------|--------|
-| OpenAI | GPT-4.5, GPT-4o, GPT-5, DALL-E | ✅ Complete |
-| Anthropic | Sonnet 4.5, Claude Code 2.0, Claude Chrome | ✅ Complete |
-| Google | Antigravity, Gemini AI Studio, Gemini Diffusion | ✅ Complete |
-| Meta | Meta AI, Llama 4 | ✅ Complete |
-| Kimi | Base Chat, Docs, Slides, Sheets, OK Computer, Websites | ✅ Complete |
-| Cursor | Agent CLI, Agent v1/v2, Chat | ✅ Complete |
-| Windsurf | Wave 11 Prompt & Tools | ✅ Complete |
-| VSCode Agent | GPT-5, GPT-4.1, Claude Sonnet 4, Gemini 2.5 Pro | ✅ Complete |
-| Devin AI | Prompt, DeepWiki | ✅ Complete |
-| Lovable | Agent Prompt & Tools | ✅ Complete |
-| Replit | Prompt & Tools | ✅ Complete |
-| v0 | Prompt & Tools | ✅ Complete |
-| Manus | Agent Loop, Modules, Prompt & Tools | ✅ Complete |
-| Augment Code | Claude 4 Sonnet, GPT-5 Agents | ✅ Complete |
-| Amp | Claude 4 Sonnet, GPT-5 | ✅ Complete |
-| +20 more | Bolt, Cline, Codex CLI, Cluely, Comet, Dia, Emergent, Gemini CLI, Junie, Kiro, Leap, Lumo, Notion, Orchids, Perplexity, Poke, Qoder, RooCode, Same, Trae, Traycer, Warp, Xcode, Z.ai Code | ✅ Complete |
-
-Each prompt includes metadata, verification steps, analysis notes, and educational applications.
-
----
-
-## Contributing
-
-We welcome contributions from the AI safety and research community!
-
-- **Add System Prompts:** Help expand our collection with new models
-- **Improve Documentation:** Clarify concepts and add examples
-- **Report Issues:** Help us improve accuracy and safety
-- **Educational Content:** Contribute notebooks and tutorials
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
-
----
-
-## Ethics and Safety
-
-AgiTerminal is committed to responsible AI research:
-
-1. **Synthetic Examples Only** - All test cases use fictional scenarios
-2. **Educational Context** - Every file includes learning objectives
-3. **Transparency** - Clear documentation of limitations and assumptions
-4. **No Harmful Content** - No encouragement of misuse or harm
-
-See [ETHICS.md](ETHICS.md) for our full ethical framework.
-
----
-
-## License
+## 📄 License
 
 MIT License - See [LICENSE](LICENSE)
 
 ---
 
-## Acknowledgments
-
-AgiTerminal builds on concepts from AI safety research, including:
-- Interpretability and alignment research
-- System prompt extraction methodologies
-- Educational frameworks for responsible AI
-
-**Use responsibly. Research thoroughly. Build ethically.**
+**Install prompts. Customize them. Build better AI.** 🚀
