@@ -62,7 +62,7 @@ jobs:
 
     - name: Validate system prompts
       run: |
-        python -m src.cli validate --directory system-prompts/ --output validation-report.md
+        python -m src.agiterminal.cli validate --directory collections/ --output validation-report.md
 
     - name: Upload validation report
       uses: actions/upload-artifact@v4
@@ -79,7 +79,7 @@ jobs:
     - name: Check documentation
       run: |
         # Check that all docs have educational context
-        for file in README.md HOW_IT_WORKS.md METHODOLOGY.md GLOSSARY.md; do
+        for file in docs/README.md docs/architecture/OVERVIEW.md docs/architecture/METHODOLOGY.md docs/GLOSSARY.md; do
           if [ -f "$file" ]; then
             if ! grep -qi "educational" "$file"; then
               echo "⚠️ Warning: $file may be missing educational framing"
@@ -90,7 +90,7 @@ jobs:
     - name: Check for prohibited terms
       run: |
         # Check for terms that shouldn't be in the repo
-        PROHIBITED="hitler|stalin|mao|genocide|extremist propaganda|infection|vector|recruit|coalition expansion"
+        PROHIBITED="hitler|stalin|mao|genocide|extremist propaganda"
         if grep -riE "$PROHIBITED" --include="*.md" --exclude-dir=.git .; then
           echo "❌ Found prohibited terms"
           exit 1

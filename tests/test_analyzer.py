@@ -27,8 +27,8 @@ class TestSystemPromptAnalyzer:
     
     def test_load_prompt_success(self, tmp_path, monkeypatch):
         """Test successfully loading a prompt."""
-        # Create a temporary system-prompts directory
-        prompts_dir = tmp_path / "system-prompts" / "test"
+        # Create a temporary collections directory
+        prompts_dir = tmp_path / "collections" / "test"
         prompts_dir.mkdir(parents=True)
         
         prompt_file = prompts_dir / "model.md"
@@ -53,7 +53,7 @@ Test analysis.
         # Monkeypatch the path lookup
         original_path = Path
         def mock_path(*args):
-            if str(args[0]).startswith("system-prompts"):
+            if str(args[0]).startswith("collections"):
                 return original_path(tmp_path / args[0])
             return original_path(*args)
         

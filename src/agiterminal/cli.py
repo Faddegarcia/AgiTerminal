@@ -3,9 +3,12 @@
 AgiTerminal CLI - Educational tools for AI system prompt research.
 
 Usage:
-    python -m src.cli analyze --provider kimi --model base-chat
-    python -m src.cli compare --prompt1 openai/gpt-4.5 --prompt2 anthropic/claude-sonnet-3.7
-    python -m src.cli validate --directory system-prompts/
+    python -m src.agiterminal.cli analyze --provider kimi --model base-chat
+    python -m src.agiterminal.cli compare --prompt1 openai/gpt-4.5 --prompt2 anthropic/claude-sonnet-3.7
+    python -m src.agiterminal.cli validate --directory collections/
+    
+Or after installation:
+    agiterminal analyze --provider kimi --model base-chat
 """
 
 import click

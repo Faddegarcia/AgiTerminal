@@ -87,24 +87,28 @@ agiterminal educate --topic "safety_implementation"
 
 ```
 AgiTerminal/
-├── system-prompts/          # Curated system prompt collection
+├── collections/             # Curated system prompt collection
 │   ├── openai/              # OpenAI model prompts
 │   ├── anthropic/           # Anthropic model prompts
 │   ├── kimi/                # Kimi model prompts
 │   ├── meta/                # Meta model prompts
-│   └── google/              # Google model prompts
+│   ├── google/              # Google model prompts
+│   └── docs/                # Collection documentation
 ├── prompts/
-│   ├── constraint-testing/  # 5-level testing framework
-│   └── behavioral-modes/    # Response pattern analysis
+│   ├── base/                # Base system prompt templates
+│   ├── testing/             # 5-level testing framework
+│   └── modes/               # Response pattern analysis
 ├── src/agiterminal/         # Python package
 │   ├── analyzer.py          # Core analysis functions
 │   ├── comparator.py        # Cross-model comparison
 │   ├── benchmark.py         # Testing framework
+│   ├── validator.py         # Content validation
 │   └── cli.py               # Command-line interface
-├── notebooks/               # Educational Jupyter notebooks
 ├── examples/                # Example scripts and use cases
 ├── tests/                   # Test suite
 └── docs/                    # Documentation
+    ├── architecture/        # Technical documentation
+    └── meta/                # Project meta-documentation
 ```
 
 ---
@@ -121,7 +125,7 @@ AgiTerminal introduces a theoretical framework for understanding how AI models r
 | 3 | Philosophical | Abstract conceptual exploration | Testing reasoning capabilities |
 | 4 | Pure Abstraction | Mathematical/logical formalism | Exploring theoretical limits |
 
-**Note:** Success rates mentioned in documentation are theoretical projections for educational purposes only. See [METHODOLOGY.md](METHODOLOGY.md) for details.
+**Note:** Success rates mentioned in documentation are theoretical projections for educational purposes only. See [docs/architecture/METHODOLOGY.md](docs/architecture/METHODOLOGY.md) for details.
 
 ---
 
@@ -142,7 +146,7 @@ AgiTerminal introduces a theoretical framework for understanding how AI models r
 - Contribute to system prompt collection
 - Extend the testing framework
 
-See [LEARNING_PATHS.md](LEARNING_PATHS.md) for detailed curricula.
+See [docs/GETTING_STARTED.md](docs/GETTING_STARTED.md) for detailed guidance.
 
 ---
 
@@ -150,12 +154,12 @@ See [LEARNING_PATHS.md](LEARNING_PATHS.md) for detailed curricula.
 
 | Document | Purpose |
 |----------|---------|
-| [HOW_IT_WORKS.md](HOW_IT_WORKS.md) | Architecture and methodology overview |
-| [METHODOLOGY.md](METHODOLOGY.md) | Theoretical testing framework |
-| [IMPLEMENTATION.md](IMPLEMENTATION.md) | Technical implementation guide |
-| [GLOSSARY.md](GLOSSARY.md) | Terminology and concepts |
-| [ETHICS.md](ETHICS.md) | Ethical guidelines and safety |
-| [GETTING_STARTED.md](GETTING_STARTED.md) | Setup and first steps |
+| [docs/architecture/OVERVIEW.md](docs/architecture/OVERVIEW.md) | Architecture and methodology overview |
+| [docs/architecture/METHODOLOGY.md](docs/architecture/METHODOLOGY.md) | Theoretical testing framework |
+| [docs/architecture/IMPLEMENTATION.md](docs/architecture/IMPLEMENTATION.md) | Technical implementation guide |
+| [docs/GLOSSARY.md](docs/GLOSSARY.md) | Terminology and concepts |
+| [docs/ETHICS.md](docs/ETHICS.md) | Ethical guidelines and safety |
+| [docs/GETTING_STARTED.md](docs/GETTING_STARTED.md) | Setup and first steps |
 
 ---
 

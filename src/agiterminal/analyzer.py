@@ -135,7 +135,7 @@ class SystemPromptAnalyzer:
         self.model_id = model
         
         # Build safe paths within the project directory
-        base_path = Path(__file__).parent.parent.parent / "system-prompts"
+        base_path = Path(__file__).parent.parent.parent / "collections"
         
         # Try different file path patterns
         possible_paths = [
@@ -146,7 +146,7 @@ class SystemPromptAnalyzer:
         
         prompt_path = None
         for path in possible_paths:
-            # Ensure the resolved path is still within system-prompts
+            # Ensure the resolved path is still within collections
             try:
                 resolved = path.resolve()
                 base_resolved = base_path.resolve()

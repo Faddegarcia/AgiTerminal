@@ -56,7 +56,7 @@ docs = [
 ]
 
 [project.scripts]
-agiterminal = "src.cli:cli"
+agiterminal = "agiterminal.cli:cli"
 
 [project.urls]
 Homepage = "https://github.com/Faddegarcia/AgiTerminal"
