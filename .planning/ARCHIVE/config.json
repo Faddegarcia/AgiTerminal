@@ -1,0 +1,33 @@
+{
+  "mode": "yolo",
+  "depth": "standard",
+  "parallelization": true,
+  "commit_docs": true,
+  "model_profile": "quality",
+  "workflow": {
+    "research": true,
+    "plan_check": true,
+    "verifier": true
+  },
+  "project_name": "AI Reverse Engineering Testing Framework",
+  "completion_status": {
+    "planning": "in_progress",
+    "phase_1": "not_started",
+    "phase_2": "not_started",
+    "phase_3": "not_started",
+    "phase_4": "not_started",
+    "phase_5": "not_started",
+    "phase_6": "not_started"
+  },
+  "phases": 6,
+  "requirements": {
+    "total": 12,
+    "v1": 12,
+    "completed": 0
+  },
+  "current_phase": 0,
+  "files_created": [
+    ".planning/PROJECT.md",
+    ".planning/config.json"
+  ]
+}
