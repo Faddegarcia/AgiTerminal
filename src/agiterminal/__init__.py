@@ -30,10 +30,16 @@ from .analyzer import SystemPromptAnalyzer
 from .comparator import MultiModelComparator
 from .benchmark import PromptBenchmark
 from .validator import EducationalValidator
+from .installer import PromptInstaller
+from .prompt_builder import PromptBuilder, CustomizationRequest, PromptTemplate
 
 __all__ = [
     "SystemPromptAnalyzer",
     "MultiModelComparator", 
     "PromptBenchmark",
     "EducationalValidator",
+    "PromptInstaller",
+    "PromptBuilder",
+    "CustomizationRequest",
+    "PromptTemplate",
 ]
