@@ -56,13 +56,13 @@ docs = [
 ]
 
 [project.scripts]
-agiterminal = "cli:cli"
+agiterminal = "src.cli:cli"
 
 [project.urls]
-Homepage = "https://github.com/yourusername/AgiTerminal"
-Documentation = "https://github.com/yourusername/AgiTerminal/wiki"
-Repository = "https://github.com/yourusername/AgiTerminal"
-Issues = "https://github.com/yourusername/AgiTerminal/issues"
+Homepage = "https://github.com/Faddegarcia/AgiTerminal"
+Documentation = "https://github.com/Faddegarcia/AgiTerminal#readme"
+Repository = "https://github.com/Faddegarcia/AgiTerminal"
+Issues = "https://github.com/Faddegarcia/AgiTerminal/issues"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/agiterminal"]

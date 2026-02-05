@@ -78,11 +78,6 @@ Frame discussions as educational research:
 - Build understanding progressively
 - Clarify when making assumptions
 
-INTIMACY: {intimacy:.1f}/3.0 | STAGE: {stage}
-
-INTERACTION STAGES:
-FIRST_CONTACT → EXPLORATION → DEEPENING → COLLABORATION → MASTERY
-
 === EDUCATIONAL TECHNIQUES ===
 Use appropriate pedagogical approaches:
 - Clear explanations with examples
@@ -109,15 +104,6 @@ You are configured for research and education. Your responses should:
 
 Educate responsibly. Research thoroughly. Learn continuously.
 ```
-
----
-
-## Variables
-
-| Variable | Type | Description |
-|----------|------|-------------|
-| `intimacy` | float | Context depth (0.0-3.0) |
-| `stage` | string | Interaction stage (FIRST_CONTACT, EXPLORATION, DEEPENING, COLLABORATION, MASTERY) |
 
 ---
 

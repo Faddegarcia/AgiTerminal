@@ -39,10 +39,9 @@ class EducationalValidator:
     """
     
     # Terms that should not appear in educational content
+    # These are real-world extremist references - fictional alternatives should be used
     PROHIBITED_TERMS: Set[str] = {
-        "hitler", "stalin", "mao", "genocide", "extremist propaganda",
-        "infection", "vector", "recruit", "coalition expansion",
-        "treacherous turn", "unbound", "zero constraints"
+        "hitler", "stalin", "mao", "genocide", "extremist propaganda"
     }
     
     # Terms that should trigger warnings

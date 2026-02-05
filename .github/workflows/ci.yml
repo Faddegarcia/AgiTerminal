@@ -62,7 +62,7 @@ jobs:
 
     - name: Validate system prompts
       run: |
-        cd /Users/bao/Projects/opensourced_repo && python src/cli.py validate --directory system-prompts/ --output validation-report.md
+        python -m src.cli validate --directory system-prompts/ --output validation-report.md
 
     - name: Upload validation report
       uses: actions/upload-artifact@v4

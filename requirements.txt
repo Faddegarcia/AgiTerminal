@@ -1,24 +1,14 @@
-# AgiTerminal - Educational Research Platform
 # Core dependencies
-
-# CLI and utilities
 click>=8.0
 pyyaml>=6.0
-python-dotenv>=1.0
-
-# Data analysis
 pandas>=1.5
-numpy>=1.24
-
-# Visualization
 matplotlib>=3.5
-
-# Async HTTP client
 aiohttp>=3.8
 
-# Optional: For development
-# pytest>=7.0
-# pytest-asyncio>=0.21
-# black>=23.0
-# flake8>=6.0
-# mypy>=1.0
+# Development dependencies
+pytest>=7.0
+pytest-asyncio>=0.21
+pytest-cov>=4.0
+black>=23.0
+flake8>=6.0
+mypy>=1.0

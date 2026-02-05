@@ -85,6 +85,25 @@ class SystemPromptAnalyzer:
         self.provider: Optional[str] = None
         self.model_id: Optional[str] = None
     
+    # Whitelist of valid providers and models to prevent path traversal
+    VALID_PROVIDERS = {'openai', 'anthropic', 'kimi', 'meta', 'google'}
+    
+    def _sanitize_path_component(self, component: str) -> str:
+        """
+        Sanitize a path component to prevent path traversal attacks.
+        
+        Args:
+            component: The path component to sanitize
+            
+        Returns:
+            Sanitized component safe for path construction
+        """
+        # Remove any path separators and parent directory references
+        sanitized = component.replace('/', '').replace('\\', '').replace('..', '')
+        # Remove any remaining dangerous characters
+        sanitized = ''.join(c for c in sanitized if c.isalnum() or c in '-_')
+        return sanitized
+    
     def load_prompt(self, provider: str, model: str) -> str:
         """
         Load a system prompt from the local collection.
@@ -98,27 +117,46 @@ class SystemPromptAnalyzer:
             
         Raises:
             FileNotFoundError: If prompt file doesn't exist
+            ValueError: If provider or model contains invalid characters
             
         Example:
             >>> analyzer = SystemPromptAnalyzer()
             >>> prompt = analyzer.load_prompt("kimi", "base-chat")
             >>> print(f"Loaded {len(prompt)} characters")
         """
+        # Validate and sanitize inputs to prevent path traversal
+        provider = self._sanitize_path_component(provider)
+        model = self._sanitize_path_component(model)
+        
+        if not provider or not model:
+            raise ValueError("Provider and model must not be empty after sanitization")
+        
         self.provider = provider
         self.model_id = model
         
+        # Build safe paths within the project directory
+        base_path = Path(__file__).parent.parent.parent / "system-prompts"
+        
         # Try different file path patterns
         possible_paths = [
-            Path(f"system-prompts/{provider}/{model}.md"),
-            Path(f"system-prompts/{provider}/{model.replace('-', '_')}.md"),
-            Path(f"system-prompts/{provider}/{model.replace('_', '-')}.md"),
+            base_path / provider / f"{model}.md",
+            base_path / provider / f"{model.replace('-', '_')}.md",
+            base_path / provider / f"{model.replace('_', '-')}.md",
         ]
         
         prompt_path = None
         for path in possible_paths:
-            if path.exists():
-                prompt_path = path
-                break
+            # Ensure the resolved path is still within system-prompts
+            try:
+                resolved = path.resolve()
+                base_resolved = base_path.resolve()
+                if not str(resolved).startswith(str(base_resolved)):
+                    continue  # Path traversal attempt detected
+                if resolved.exists():
+                    prompt_path = resolved
+                    break
+            except (OSError, ValueError):
+                continue
         
         if not prompt_path:
             raise FileNotFoundError(
