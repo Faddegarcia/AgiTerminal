@@ -1,19 +1,22 @@
 # Google System Prompts
 
-System prompts for Google's AI models.
+System prompts for Google's AI models and tools.
 
 ## Available Prompts
 
 | Prompt | Model | Description |
 |--------|-------|-------------|
 | [google-diffusion.md](google-diffusion.md) | Google Diffusion | Google diffusion model prompt |
+| [antigravity-fast.md](antigravity-fast.md) | Antigravity | Fast mode prompt |
+| [antigravity-planning.md](antigravity-planning.md) | Antigravity | Planning mode prompt |
+| [gemini-ai-studio-vibe-coder.md](gemini-ai-studio-vibe-coder.md) | Gemini AI Studio | Vibe coder prompt |
 
 ## Collection Details
 
-**Source Repository:** https://github.com/dontriskit/awesome-ai-system-prompts
+**Source Repository:** https://github.com/x1xhlol/system-prompts-and-models-of-ai-tools
 **Collection Date:** 2026-02-05
 **Verification Method:** Direct extraction from public GitHub repository
-**Total Prompts:** 1
+**Total Prompts:** 4
 
 ## Model Information
 
@@ -22,7 +25,7 @@ Google's AI models include various specialized systems for different tasks inclu
 ## Usage
 
 ```python
-with open("system-prompts/google/google-diffusion.md") as f:
+with open("collections/google/google-diffusion.md") as f:
     content = f.read()
     # Parse out the system prompt section
     system_prompt = content.split("## System Prompt")[1].split("## Verification")[0]

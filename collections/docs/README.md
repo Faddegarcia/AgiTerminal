@@ -68,56 +68,89 @@ Understand:
 
 ## 📊 Available Models
 
-### 🔵 Kimi (Moonshot AI) - 6 Prompts
-**Location**: `kimi/`
+### AI Model Providers
 
-Specialized variants showcasing different capabilities:
-- Base Chat (general-purpose)
-- OK Computer (analytical agent)
-- Docs Specialist (document processing)
-- Sheets Specialist (data analysis)
-- Slides Specialist (presentation design)
-- Websites Specialist (web development)
-
-**Source**: [kimi-k2.5-system-analysis](https://github.com/dnnyngyen/kimi-k2.5-system-analysis)
-
-### 🟢 OpenAI - 5 Prompts
+#### 🟢 OpenAI - 5 Prompts
 **Location**: `openai/`
+- GPT-4.5, GPT-4o, GPT-5, GPT-5 Detailed, DALL-E
 
-State-of-the-art models with tool integration:
-- GPT-4.5 (latest architecture)
-- GPT-4o (optimized version)
-- GPT-5 (next generation)
-- GPT-5 Detailed (comprehensive)
-- DALL-E (image generation)
-
-**Source**: [awesome-ai-system-prompts](https://github.com/dontriskit/awesome-ai-system-prompts)
-
-### 🟣 Anthropic - 2 Prompts
+#### 🟣 Anthropic - 6 Prompts
 **Location**: `anthropic/`
+- Sonnet 4.5, Claude Code 2.0, Claude Code, Claude Chrome, Claude Sonnet 3.7, Claude General
 
-Constitutional AI approach:
-- Claude 3 Sonnet
-- Claude General
-
-**Source**: [awesome-ai-system-prompts](https://github.com/dontriskit/awesome-ai-system-prompts)
-
-### 🔴 Google - 1 Prompt
+#### 🔴 Google - 4 Prompts
 **Location**: `google/`
+- Antigravity Fast, Antigravity Planning, Gemini AI Studio Vibe Coder, Google Diffusion
 
-Specialized models:
-- Google Diffusion
-
-**Source**: [awesome-ai-system-prompts](https://github.com/dontriskit/awesome-ai-system-prompts)
-
-### 🟠 Meta - 2 Prompts
+#### 🟠 Meta - 2 Prompts
 **Location**: `meta/`
+- LLaMA 4, Meta AI General
 
-Open approach AI:
-- LLaMA 4
-- Meta AI General
+#### 🔵 Kimi (Moonshot AI) - 6 Prompts
+**Location**: `kimi/`
+- Base Chat, OK Computer, Docs, Sheets, Slides, Websites
 
-**Source**: [awesome-ai-system-prompts](https://github.com/dontriskit/awesome-ai-system-prompts)
+### AI Code Editors & IDEs
+
+| Collection | Location | Prompts |
+|-----------|----------|---------|
+| Cursor | `cursor/` | Agent CLI, Agent v1/v1.2/v2.0, Agent 2025-09-03, Chat |
+| Windsurf | `windsurf/` | Wave 11 Prompt & Tools |
+| VSCode Agent | `vscode-agent/` | GPT-5, GPT-5 Mini, GPT-4.1, GPT-4o, Claude Sonnet 4, Gemini 2.5 Pro |
+| Augment Code | `augment-code/` | Claude 4 Sonnet, GPT-5 agents |
+| Amp | `amp/` | Claude 4 Sonnet, GPT-5 (YAML) |
+| Trae | `trae/` | Builder, Chat |
+| CodeBuddy | `codebuddy/` | Chat, Craft |
+| Junie | `junie/` | JetBrains AI |
+| Kiro | `kiro/` | Mode Classifier, Spec, Vibe |
+| Xcode | `xcode/` | Document, Explain, Message, Playground, Preview, System |
+| Z.ai Code | `zai-code/` | Prompt |
+
+### AI App Builders
+
+| Collection | Location | Prompts |
+|-----------|----------|---------|
+| v0 | `v0/` | Vercel v0 Prompt & Tools |
+| Lovable | `lovable/` | Agent Prompt & Tools |
+| Same.dev | `same/` | Prompt & Tools |
+| Replit | `replit/` | Prompt & Tools |
+| Leap.new | `leap/` | Prompts & Tools |
+| Bolt | `bolt/` | Open source app builder |
+
+### AI Agents & Assistants
+
+| Collection | Location | Prompts |
+|-----------|----------|---------|
+| Manus | `manus/` | Agent Loop, Modules, Prompt, Tools |
+| Devin AI | `devin/` | Prompt, DeepWiki |
+| Traycer AI | `traycer/` | Phase Mode, Plan Mode |
+| Cluely | `cluely/` | Default, Enterprise |
+| Poke | `poke/` | Agent + 6 parts |
+| Emergent | `emergent/` | Prompt & Tools |
+| Comet | `comet/` | System Prompt & Tools |
+
+### AI Search & Productivity
+
+| Collection | Location | Prompts |
+|-----------|----------|---------|
+| Perplexity | `perplexity/` | AI search engine |
+| Notion AI | `notion/` | Prompt & Tools |
+| Warp.dev | `warp/` | AI terminal |
+| Dia | `dia/` | Browser assistant |
+| Orchids.app | `orchids/` | Decision-making, System |
+| Qoder | `qoder/` | Quest Action, Quest Design, Prompt |
+
+### Open Source Tools
+
+| Collection | Location | Prompts |
+|-----------|----------|---------|
+| Cline | `cline/` | VS Code extension |
+| Codex CLI | `codex-cli/` | OpenAI Codex CLI |
+| Gemini CLI | `gemini-cli/` | Google Gemini CLI |
+| Lumo | `lumo/` | Prompt |
+| RooCode | `roocode/` | Prompt |
+
+**Primary Source**: [system-prompts-and-models-of-ai-tools](https://github.com/x1xhlol/system-prompts-and-models-of-ai-tools)
 
 ---
 
@@ -163,10 +196,10 @@ Understanding how prompts are obtained is crucial for:
 
 ```bash
 # Navigate to directory
-cd /path/to/agi-terminal/system-prompts
+cd /path/to/agi-terminal/collections
 
-# View all prompts by provider
-ls kimi/ openai/ anthropic/ google/ meta/
+# View all providers
+ls
 
 # Read a specific prompt
 cat openai/gpt-4.5.md
@@ -293,15 +326,16 @@ All prompts were obtained from:
 
 ## 📊 Benchmark Statistics
 
-| Provider | Prompts | Models | Extraction Date |
-|----------|---------|--------|-----------------|
-| Kimi | 6 | Various | 2026-02-05 |
-| OpenAI | 5 | GPT-4.5/4o/5/DALL-E | 2026-02-05 |
-| Anthropic | 2 | Claude Series | 2026-02-05 |
-| Google | 1 | Diffusion | 2026-02-05 |
-| Meta | 2 | LLaMA/Meta AI | 2026-02-05 |
+| Category | Providers | Prompts | Extraction Date |
+|----------|-----------|---------|-----------------|
+| AI Model Providers | OpenAI, Anthropic, Google, Meta, Kimi | 23 | 2026-02-05 |
+| Code Editors & IDEs | Cursor, Windsurf, VSCode Agent, Augment, Amp, Trae, CodeBuddy, Junie, Kiro, Xcode, Z.ai | 35 | 2026-02-05 |
+| App Builders | v0, Lovable, Same, Replit, Leap, Bolt | 10 | 2026-02-05 |
+| AI Agents | Manus, Devin, Traycer, Cluely, Poke, Emergent, Comet | 18 | 2026-02-05 |
+| Search & Productivity | Perplexity, Notion, Warp, Dia, Orchids, Qoder | 8 | 2026-02-05 |
+| Open Source | Cline, Codex CLI, Gemini CLI, Lumo, RooCode | 6 | 2026-02-05 |
 
-**Total: 16 system prompts from 5 major AI providers**
+**Total: 96+ system prompts from 40+ AI providers and tools**
 
 ---
 
@@ -309,7 +343,7 @@ All prompts were obtained from:
 
 ### Source Repositories
 
-- [Awesome AI System Prompts](https://github.com/dontriskit/awesome-ai-system-prompts) - Primary source for most prompts
+- [System Prompts and Models of AI Tools](https://github.com/x1xhlol/system-prompts-and-models-of-ai-tools) - Primary source for most prompts (113k+ stars)
 - [Kimi K2.5 Analysis](https://github.com/dnnyngyen/kimi-k2.5-system-analysis) - Kimi specialized prompts
 
 ### Related Research

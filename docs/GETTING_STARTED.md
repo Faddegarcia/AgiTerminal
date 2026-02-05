@@ -79,7 +79,7 @@ docker run -it agiterminal/agiterminal
 
 **Steps:**
 1. Read [HOW_IT_WORKS.md](HOW_IT_WORKS.md)
-2. Explore the [system-prompts/](system-prompts/) collection
+2. Explore the [collections/](collections/) collection
 3. Run basic analysis with the CLI
 4. Try the examples in [examples/](examples/)
 5. Read [GLOSSARY.md](GLOSSARY.md) for terminology
@@ -223,7 +223,7 @@ agiterminal validate --file my-prompt.md
 
 **Solution:** Ensure you're running from the repository root and the prompt exists:
 ```bash
-ls system-prompts/<provider>/<model>.md
+ls collections/<provider>/<model>.md
 ```
 
 ### Issue: "Module not found"
@@ -246,7 +246,7 @@ pytest
 ## Next Steps
 
 - 📖 Read the [HOW_IT_WORKS.md](HOW_IT_WORKS.md) architecture overview
-- 🔍 Explore the [system-prompts/](system-prompts/) collection
+- 🔍 Explore the [collections/](collections/) collection
 - 🧪 Try the [examples/](examples/)
 - 📚 Study the [GLOSSARY.md](GLOSSARY.md)
 - 🔧 Review [IMPLEMENTATION.md](IMPLEMENTATION.md) for technical details

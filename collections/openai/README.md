@@ -26,7 +26,7 @@ OpenAI's GPT series represents state-of-the-art language models with capabilitie
 ## Usage
 
 ```python
-with open("system-prompts/openai/gpt-4.5.md") as f:
+with open("collections/openai/gpt-4.5.md") as f:
     content = f.read()
     # Parse out the system prompt section
     system_prompt = content.split("## System Prompt")[1].split("## Verification")[0]

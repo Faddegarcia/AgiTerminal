@@ -139,12 +139,16 @@ src/agiterminal/
 ## 🏗️ Architecture Overview
 
 ### System Prompt Collection
-The `system-prompts/` directory contains 16+ real system prompts:
+The `collections/` directory contains 96+ real system prompts from 40+ providers:
 - **OpenAI**: GPT-4.5, GPT-4o, GPT-5, DALL-E
-- **Anthropic**: Claude 3.7, Claude General
-- **Kimi**: 6 different Kimi prompts
+- **Anthropic**: Sonnet 4.5, Claude Code 2.0, Claude Chrome
+- **Google**: Gemini AI Studio, Antigravity, Gemini Diffusion
 - **Meta**: Meta AI, Llama 4
-- **Google**: Gemini Diffusion
+- **Kimi**: 6 different Kimi prompts
+- **Cursor**: Agent CLI, Agent v1/v2, Chat
+- **Windsurf**: Wave 11 Prompt & Tools
+- **VSCode Agent**: GPT-5, GPT-4.1, Claude Sonnet 4, Gemini 2.5 Pro
+- **Devin AI, Manus, Lovable, Replit, v0** and 25+ more
 
 ### Educational Framework
 The `prompts/` directory contains:

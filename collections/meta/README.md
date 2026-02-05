@@ -23,7 +23,7 @@ Meta's LLaMA (Large Language Model Meta AI) series represents their approach to 
 ## Usage
 
 ```python
-with open("system-prompts/meta/llama-4.md") as f:
+with open("collections/meta/llama-4.md") as f:
     content = f.read()
     # Parse out the system prompt section
     system_prompt = content.split("## System Prompt")[1].split("## Verification")[0]

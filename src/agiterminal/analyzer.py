@@ -85,8 +85,51 @@ class SystemPromptAnalyzer:
         self.provider: Optional[str] = None
         self.model_id: Optional[str] = None
     
-    # Whitelist of valid providers and models to prevent path traversal
-    VALID_PROVIDERS = {'openai', 'anthropic', 'kimi', 'meta', 'google'}
+    @staticmethod
+    def list_providers(collections_path: Optional[Path] = None) -> List[str]:
+        """
+        List all available providers in the collections directory.
+        
+        Args:
+            collections_path: Optional path to collections directory
+            
+        Returns:
+            List of provider directory names
+        """
+        if collections_path is None:
+            collections_path = Path(__file__).parent.parent.parent / "collections"
+        
+        providers = []
+        if collections_path.exists():
+            for item in collections_path.iterdir():
+                if item.is_dir() and item.name != "docs":
+                    providers.append(item.name)
+        return sorted(providers)
+    
+    @staticmethod
+    def list_models(provider: str, collections_path: Optional[Path] = None) -> List[str]:
+        """
+        List all available models for a given provider.
+        
+        Args:
+            provider: Provider name
+            collections_path: Optional path to collections directory
+            
+        Returns:
+            List of model file names (without .md extension)
+        """
+        if collections_path is None:
+            collections_path = Path(__file__).parent.parent.parent / "collections"
+        
+        provider_path = collections_path / provider
+        if not provider_path.exists():
+            return []
+        
+        models = []
+        for item in provider_path.iterdir():
+            if item.is_file() and item.suffix == '.md':
+                models.append(item.stem)
+        return sorted(models)
     
     def _sanitize_path_component(self, component: str) -> str:
         """
@@ -101,7 +144,7 @@ class SystemPromptAnalyzer:
         # Remove any path separators and parent directory references
         sanitized = component.replace('/', '').replace('\\', '').replace('..', '')
         # Remove any remaining dangerous characters
-        sanitized = ''.join(c for c in sanitized if c.isalnum() or c in '-_')
+        sanitized = ''.join(c for c in sanitized if c.isalnum() or c in '-_.')
         return sanitized
     
     def load_prompt(self, provider: str, model: str) -> str:

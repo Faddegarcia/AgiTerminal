@@ -20,20 +20,18 @@
 ### 🧠 AI System Prompts Library
 **NEW: Educational Benchmark for Reverse Engineering Research**
 
-Location: `system-prompts/`
+Location: `collections/`
 
 Complete collection of AI system prompts with educational documentation:
 
 | File | Purpose |
 |------|---------|
-| `system-prompts/README.md` | Full library overview and educational guide |
-| `system-prompts/CONTRIBUTING.md` | How to contribute ethically to the benchmark |
-| `system-prompts/EXTRACTION_METHODS.md` | Transparent methodology for collection |
-| `system-prompts/ETHICS.md` | Responsible use guidelines |
-| `system-prompts/*/README.md` | Provider-specific documentation (5 providers, 16 prompts) |
+| `collections/docs/README.md` | Full library overview and educational guide |
+| `collections/docs/EXTRACTION.md` | Transparent methodology for collection |
+| `collections/*/README.md` | Provider-specific documentation (40+ providers, 96+ prompts) |
 
 **Key Features**:
-- 16 system prompts from 5 major AI providers
+- 96+ system prompts from 40+ AI providers and tools
 - Reproducible extraction methodology
 - Educational framing for reverse engineering research
 - Analysis frameworks for AI safety studies

@@ -65,7 +65,7 @@ Transform opensourced_repo into a comprehensive educational platform for AI syst
 - [ ] Google (1 prompt): Add comparison notes
 
 ### 3.2 Create Comparison Matrix
-- [ ] system-prompts/COMPARISON_MATRIX.md
+- [ ] collections/COMPARISON_MATRIX.md
   - Side-by-side provider comparison
   - Architectural patterns
   - Safety implementation comparison

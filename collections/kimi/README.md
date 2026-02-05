@@ -27,7 +27,7 @@ Kimi is a sophisticated large-scale language model built on a Mixture-of-Experts
 ## Usage
 
 ```python
-with open("system-prompts/kimi/base-chat.md") as f:
+with open("collections/kimi/base-chat.md") as f:
     content = f.read()
     # Parse out the system prompt section
     system_prompt = content.split("## System Prompt")[1].split("## Verification")[0]

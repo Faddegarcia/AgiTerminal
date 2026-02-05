@@ -120,7 +120,7 @@ class SystemPromptAnalyzer:
         Returns:
             The system prompt content
         """
-        prompt_path = Path(f"system-prompts/{provider}/{model}.md")
+        prompt_path = Path(f"collections/{provider}/{model}.md")
         if not prompt_path.exists():
             raise FileNotFoundError(f"Prompt not found: {prompt_path}")
         
@@ -818,7 +818,7 @@ python -m src.cli educate --topic safety_implementation
 ## Next Steps
 
 - Explore [notebooks/](notebooks/) for hands-on tutorials
-- Read [system-prompts/](system-prompts/) for provider comparisons
+- Read [collections/](collections/) for provider comparisons
 - Try [examples/](examples/) for practical applications
 - See [deep-dives/](deep-dives/) for advanced topics
 

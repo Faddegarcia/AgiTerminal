@@ -347,9 +347,12 @@ def suggest(requirements: Optional[str], capabilities: Optional[str]):
             "openai/gpt-4.5",
             "openai/gpt-4o",
             "openai/gpt-5",
+            "anthropic/sonnet-4.5",
+            "anthropic/claude-code-2.0",
+            "cursor/agent-prompt-2.0",
+            "windsurf/prompt-wave-11",
+            "devin/prompt",
             "kimi/base-chat",
-            "kimi/ok-computer",
-            "anthropic/claude-sonnet-3.7"
         ]
         
         comparator.load_multiple_prompts(models_to_load)
@@ -404,7 +407,7 @@ def validate(directory: Optional[str], file: Optional[str],
     """Validate content for educational guidelines.
     
     Example:
-        agiterminal validate --directory system-prompts/
+        agiterminal validate --directory collections/
         agiterminal validate --file prompt.md --output report.md
     """
     validator = EducationalValidator()
@@ -448,9 +451,9 @@ def list_models():
     """
     click.echo("📚 Available Models in Collection\n")
     
-    base_path = Path("system-prompts")
+    base_path = Path("collections")
     if not base_path.exists():
-        click.echo("❌ system-prompts/ directory not found", err=True)
+        click.echo("❌ collections/ directory not found", err=True)
         raise click.Exit(1)
     
     for provider_dir in sorted(base_path.iterdir()):

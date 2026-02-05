@@ -87,12 +87,18 @@ agiterminal educate --topic "safety_implementation"
 
 ```
 AgiTerminal/
-├── collections/             # Curated system prompt collection
-│   ├── openai/              # OpenAI model prompts
-│   ├── anthropic/           # Anthropic model prompts
-│   ├── kimi/                # Kimi model prompts
-│   ├── meta/                # Meta model prompts
-│   ├── google/              # Google model prompts
+├── collections/             # Curated system prompt collection (40+ providers)
+│   ├── openai/              # OpenAI model prompts (GPT-4.5, GPT-4o, GPT-5)
+│   ├── anthropic/           # Anthropic prompts (Sonnet 4.5, Claude Code, Chrome)
+│   ├── google/              # Google prompts (Gemini, Antigravity)
+│   ├── meta/                # Meta model prompts (Llama 4, Meta AI)
+│   ├── kimi/                # Kimi model prompts (6 variants)
+│   ├── cursor/              # Cursor IDE prompts (Agent, Chat, CLI)
+│   ├── windsurf/            # Windsurf prompts (Wave 11)
+│   ├── vscode-agent/        # VSCode Copilot agent prompts
+│   ├── devin/               # Devin AI agent prompts
+│   ├── manus/               # Manus agent prompts
+│   ├── ...                  # 30+ more providers/tools
 │   └── docs/                # Collection documentation
 ├── prompts/
 │   ├── base/                # Base system prompt templates
@@ -167,13 +173,24 @@ See [docs/GETTING_STARTED.md](docs/GETTING_STARTED.md) for detailed guidance.
 
 We maintain a curated collection of system prompts from major AI providers:
 
-| Provider | Models | Status |
-|----------|--------|--------|
+| Provider / Tool | Models / Prompts | Status |
+|----------------|-----------------|--------|
 | OpenAI | GPT-4.5, GPT-4o, GPT-5, DALL-E | ✅ Complete |
-| Anthropic | Claude 3.7 Sonnet, Claude General | ✅ Complete |
-| Kimi | Base Chat, Docs, Slides, Sheets, OK Computer, Websites | ✅ Complete |
+| Anthropic | Sonnet 4.5, Claude Code 2.0, Claude Chrome | ✅ Complete |
+| Google | Antigravity, Gemini AI Studio, Gemini Diffusion | ✅ Complete |
 | Meta | Meta AI, Llama 4 | ✅ Complete |
-| Google | Gemini Diffusion | ✅ Complete |
+| Kimi | Base Chat, Docs, Slides, Sheets, OK Computer, Websites | ✅ Complete |
+| Cursor | Agent CLI, Agent v1/v2, Chat | ✅ Complete |
+| Windsurf | Wave 11 Prompt & Tools | ✅ Complete |
+| VSCode Agent | GPT-5, GPT-4.1, Claude Sonnet 4, Gemini 2.5 Pro | ✅ Complete |
+| Devin AI | Prompt, DeepWiki | ✅ Complete |
+| Lovable | Agent Prompt & Tools | ✅ Complete |
+| Replit | Prompt & Tools | ✅ Complete |
+| v0 | Prompt & Tools | ✅ Complete |
+| Manus | Agent Loop, Modules, Prompt & Tools | ✅ Complete |
+| Augment Code | Claude 4 Sonnet, GPT-5 Agents | ✅ Complete |
+| Amp | Claude 4 Sonnet, GPT-5 | ✅ Complete |
+| +20 more | Bolt, Cline, Codex CLI, Cluely, Comet, Dia, Emergent, Gemini CLI, Junie, Kiro, Leap, Lumo, Notion, Orchids, Perplexity, Poke, Qoder, RooCode, Same, Trae, Traycer, Warp, Xcode, Z.ai Code | ✅ Complete |
 
 Each prompt includes metadata, verification steps, analysis notes, and educational applications.
 

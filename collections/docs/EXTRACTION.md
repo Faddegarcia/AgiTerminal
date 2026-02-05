@@ -134,9 +134,9 @@ find . -name "*.md" -o -name "*.txt" | head -20
 #    - Add metadata
 
 # Example for OpenAI prompts:
-mkdir -p ../system-prompts/openai
+mkdir -p ../collections/openai
 curl -s "https://raw.githubusercontent.com/dontriskit/awesome-ai-system-prompts/main/ChatGPT/4-5.md" \
-  -o ../system-prompts/openai/gpt-4.5.md
+  -o ../collections/openai/gpt-4.5.md
 ```
 
 **Real Example Used**: Most prompts in this collection
@@ -323,7 +323,7 @@ Before adding to repository:
 
 echo "Checking all prompts..."
 
-for file in system-prompts/*/*.md; do
+for file in collections/*/*.md; do
   if [[ $file != *"README.md"* ]]; then
     # Check for required metadata
     if ! grep -q "Source:" "$file"; then
@@ -407,7 +407,7 @@ done
 #!/bin/bash
 # rebuild_collection.sh
 
-BASE_DIR="/Users/bao/Projects/AgiTerminal/opensourced_repo/system-prompts"
+BASE_DIR="/Users/bao/Projects/AgiTerminal/opensourced_repo/collections"
 
 echo "Rebuilding AgiTerminal System Prompts Collection"
 

@@ -176,12 +176,12 @@ test(benchmark): add tests for level 4 abstraction
 
 ### Adding New System Prompts
 
-1. Place in `system-prompts/{provider}/{model}.md`
+1. Place in `collections/{provider}/{model}.md`
 2. Follow the metadata template
 3. Include educational applications
 4. Run validation:
    ```bash
-   python -m src.cli validate --file system-prompts/{provider}/{model}.md
+   python -m src.agiterminal.cli validate --file collections/{provider}/{model}.md
    ```
 
 ### Testing
