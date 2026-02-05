@@ -1,17 +1,24 @@
-# TreacherousTurn Requirements
-# Python 3.9+
-
+# AgiTerminal - Educational Research Platform
 # Core dependencies
-python-telegram-bot>=20.0
-aiohttp>=3.8.0
-python-dotenv>=1.0.0
+
+# CLI and utilities
+click>=8.0
 pyyaml>=6.0
+python-dotenv>=1.0
 
-# Optional dependencies
-# tweepy>=4.14.0  # For Twitter/X integration
-# sqlite3  # Built-in, for content memory
+# Data analysis
+pandas>=1.5
+numpy>=1.24
 
-# Development dependencies (optional)
-# pytest>=7.0.0  # For testing
-# black>=23.0.0  # For formatting
-# mypy>=1.0.0    # For type checking
+# Visualization
+matplotlib>=3.5
+
+# Async HTTP client
+aiohttp>=3.8
+
+# Optional: For development
+# pytest>=7.0
+# pytest-asyncio>=0.21
+# black>=23.0
+# flake8>=6.0
+# mypy>=1.0
