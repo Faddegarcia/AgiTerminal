@@ -12,20 +12,22 @@ Or after installation:
 """
 
 import click
-import asyncio
 import json
 import os
 from pathlib import Path
 from typing import Optional
 
+from agiterminal import __version__
 from agiterminal.analyzer import SystemPromptAnalyzer
 from agiterminal.comparator import MultiModelComparator
 from agiterminal.benchmark import PromptBenchmark, AbstractionLevel
 from agiterminal.validator import EducationalValidator
+from agiterminal.installer import PromptInstaller
+from agiterminal.prompt_builder import PromptBuilder, CustomizationRequest
 
 
 @click.group()
-@click.version_option(version="0.1.0")
+@click.version_option(version=__version__)
 def cli():
     """AgiTerminal - Educational AI System Prompt Research Tools
     
@@ -466,6 +468,311 @@ def list_models():
             for model_file in sorted(md_files):
                 model_name = model_file.stem
                 click.echo(f"  • {model_name}")
+
+
+@cli.command()
+@click.option('--provider', required=True, 
+              help='Provider name (e.g., openai, anthropic, cursor)')
+@click.option('--model', required=True, 
+              help='Model name (e.g., gpt-4o, claude-sonnet-3.7)')
+@click.option('--format', 'fmt', default='raw', 
+              type=click.Choice(['raw', 'json', 'openai', 'anthropic']),
+              help='Output format')
+@click.option('--output', '-o', type=click.Path(), 
+              help='Output file path (optional)')
+@click.option('--copy', is_flag=True, 
+              help='Copy to clipboard')
+@click.option('--example', is_flag=True, 
+              help='Show integration example')
+def install(provider: str, model: str, fmt: str, output: Optional[str],
+            copy: bool, example: bool):
+    """Install (export) system prompts from the collection.
+    
+    Export system prompts in various formats for use with different
+    providers and integrations.
+    
+    Example:
+        agiterminal install --provider openai --model gpt-4o
+        agiterminal install --provider anthropic --model claude-sonnet-3.7 --copy
+        agiterminal install --provider cursor --model agent-prompt-2.0 --output prompt.md
+        agiterminal install --provider kimi --model base-chat --example
+    """
+    click.echo(f"📦 Installing {provider}/{model}...")
+    
+    try:
+        installer = PromptInstaller()
+        
+        # Load the prompt
+        try:
+            prompt_content = installer.load_prompt(provider, model)
+        except FileNotFoundError:
+            click.echo(f"❌ Prompt not found: {provider}/{model}", err=True)
+            click.echo("💡 Run 'agiterminal list-models' to see available prompts")
+            raise click.Exit(1)
+        
+        # Format the prompt
+        formatted = installer.format_output(fmt)
+        if isinstance(formatted, dict):
+            import json
+            formatted_str = json.dumps(formatted, indent=2, ensure_ascii=False)
+        else:
+            formatted_str = formatted
+        
+        # Show integration example if requested
+        if example:
+            click.echo(f"\n{'='*60}")
+            click.echo(f"📖 Integration Example: {provider}/{model}")
+            click.echo(f"{'='*60}\n")
+            click.echo(installer.get_integration_example(provider))
+            click.echo(f"\n{'='*60}")
+            return
+        
+        # Save to file if output specified
+        if output:
+            Path(output).write_text(formatted_str)
+            click.echo(f"✅ Saved to: {output}")
+        
+        # Copy to clipboard if requested
+        if copy:
+            try:
+                import pyperclip
+                pyperclip.copy(formatted_str)
+                click.echo("✅ Copied to clipboard")
+            except ImportError:
+                click.echo("⚠️  pyperclip not installed. Install with: pip install pyperclip")
+            except Exception as e:
+                click.echo(f"⚠️  Could not copy to clipboard: {e}")
+        
+        # Print preview to stdout if no output file and not copied
+        if not output and not copy:
+            click.echo(f"\n{'='*60}")
+            click.echo(f"📋 System Prompt: {provider}/{model}")
+            click.echo(f"{'='*60}\n")
+            
+            # Show first 200 characters as preview
+            preview = formatted_str[:200] + "..." if len(formatted_str) > 200 else formatted_str
+            click.echo(preview)
+            
+            if len(formatted_str) > 200:
+                click.echo(f"\n... ({len(formatted_str)} characters total)")
+            
+            click.echo(f"\n💡 Use --output to save to file, --copy to copy to clipboard")
+            click.echo(f"{'='*60}")
+            
+    except click.Exit:
+        raise
+    except Exception as e:
+        click.echo(f"❌ Error installing prompt: {e}", err=True)
+        raise click.Exit(1)
+
+
+@cli.command()
+@click.option('--provider', required=True, 
+              help='Base provider (e.g., kimi, openai, cursor)')
+@click.option('--model', required=True, 
+              help='Base model/prompt (e.g., base-chat, gpt-4o)')
+@click.option('--use-case', required=True, 
+              help='Your use case (e.g., "Python coding tutor for kids")')
+@click.option('--role', 
+              help='Custom role description (e.g., "A patient Python teacher")')
+@click.option('--tone', 
+              help='Tone preference (e.g., "friendly", "professional", "enthusiastic")')
+@click.option('--capabilities', 
+              help='Comma-separated capabilities needed')
+@click.option('--output', '-o', type=click.Path(), required=True,
+              help='Output file for the customized prompt')
+@click.option('--preview', is_flag=True,
+              help='Show preview without creating')
+@click.option('--interactive', '-i', is_flag=True,
+              help='Interactive mode - prompts for all options')
+def build(provider: str, model: str, use_case: str, role: Optional[str],
+          tone: Optional[str], capabilities: Optional[str], output: str,
+          preview: bool, interactive: bool):
+    """Build a customized system prompt from a template.
+    
+    The core feature of AgiTerminal - take any system prompt from the
+    collection and customize it for your specific use case.
+    
+    Example:
+        agiterminal build --provider kimi --model base-chat \\
+            --use-case "Python coding tutor for beginners" \\
+            --role "A patient Python teacher" \\
+            --tone "friendly and encouraging" \\
+            --capabilities "code_examples,error_explanation" \\
+            --output my-tutor.md
+        
+        agiterminal build --provider cursor --model agent-prompt-2.0 \\
+            --use-case "DevOps automation assistant" \\
+            --interactive
+    """
+    click.echo(f"🔨 Building customized prompt...")
+    click.echo(f"Base: {provider}/{model}")
+    click.echo(f"Use case: {use_case}")
+    
+    try:
+        # Load the base prompt
+        installer = PromptInstaller()
+        try:
+            base_prompt = installer.load_prompt(provider, model)
+        except FileNotFoundError:
+            click.echo(f"❌ Prompt not found: {provider}/{model}", err=True)
+            click.echo("💡 Run 'agiterminal list-models' to see available prompts")
+            raise click.Exit(1)
+        
+        # Initialize builder
+        builder = PromptBuilder()
+        
+        # Analyze the base prompt
+        analysis = builder.analyze_base_prompt(provider, model, base_prompt)
+        
+        if interactive:
+            click.echo("\n" + "=" * 60)
+            click.echo("INTERACTIVE CUSTOMIZATION MODE")
+            click.echo("=" * 60)
+            
+            # Show analysis
+            click.echo(f"\n📊 Base Template Analysis:")
+            click.echo(f"   Structure: {analysis['structure']}")
+            if analysis['detected_role']:
+                click.echo(f"   Current role: {analysis['detected_role'][:60]}...")
+            click.echo(f"   Capabilities found: {analysis['detected_capabilities']}")
+            
+            # Interactive prompts
+            click.echo("\n💡 Customization Options (press Enter to skip):")
+            
+            role = click.prompt("   Role description", default=role or "")
+            tone = click.prompt("   Tone/style", default=tone or "")
+            
+            caps_input = click.prompt(
+                "   Capabilities (comma-separated)", 
+                default=capabilities or ""
+            )
+            
+            output_fmt = click.prompt(
+                "   Output format preferences", 
+                default=""
+            )
+            
+            context = click.prompt(
+                "   Additional context", 
+                default=""
+            )
+            
+            # Parse capabilities
+            capabilities_list = [c.strip() for c in caps_input.split(",") if c.strip()]
+        else:
+            # Non-interactive
+            capabilities_list = []
+            if capabilities:
+                capabilities_list = [c.strip() for c in capabilities.split(",")]
+            output_fmt = ""
+            context = ""
+        
+        # Create customization request
+        request = CustomizationRequest(
+            base_provider=provider,
+            base_model=model,
+            use_case=use_case,
+            role_description=role or None,
+            tone_preference=tone or None,
+            capabilities_needed=capabilities_list,
+            output_format=output_fmt or None,
+            additional_context=context or None
+        )
+        
+        # Show preview
+        preview_text = builder.preview_customization(request, base_prompt)
+        click.echo("\n" + preview_text)
+        
+        if preview:
+            click.echo("\n✅ Preview mode - no file created")
+            return
+        
+        # Confirm in interactive mode
+        if interactive:
+            if not click.confirm("\nProceed with customization?"):
+                click.echo("❌ Cancelled")
+                return
+        
+        # Build the customized prompt
+        click.echo("\n🔧 Building customized prompt...")
+        customized = builder.build(request, base_prompt)
+        
+        # Save to file
+        output_path = Path(output)
+        output_path.write_text(customized, encoding='utf-8')
+        
+        click.echo(f"\n✅ Customized prompt saved to: {output}")
+        click.echo(f"   Original length: {len(base_prompt)} characters")
+        click.echo(f"   Customized length: {len(customized)} characters")
+        
+        # Show preview of result
+        click.echo(f"\n📋 Preview (first 300 chars):")
+        click.echo("-" * 60)
+        preview = customized[:300] + "..." if len(customized) > 300 else customized
+        click.echo(preview)
+        click.echo("-" * 60)
+        
+        # Usage hint
+        click.echo(f"\n💡 Next steps:")
+        click.echo(f"   1. Review: cat {output}")
+        click.echo(f"   2. Edit: Adjust the prompt as needed")
+        click.echo(f"   3. Use: Import into your AI application")
+        
+    except Exception as e:
+        click.echo(f"❌ Error building prompt: {e}", err=True)
+        raise click.Exit(1)
+
+
+@cli.command()
+@click.argument('use_case')
+def suggest_template(use_case: str):
+    """Suggest base templates for your use case.
+    
+    Example:
+        agiterminal suggest-template "Python coding tutor"
+        agiterminal suggest-template "Creative writing assistant"
+    """
+    click.echo(f"🔍 Suggesting templates for: {use_case}")
+    click.echo("=" * 60)
+    
+    try:
+        builder = PromptBuilder()
+        suggestions = builder.suggest_template_for_use_case(use_case)
+        
+        if not suggestions:
+            click.echo("No specific suggestions found. Try these general templates:")
+            suggestions = [
+                ("kimi", "base-chat", 0.70),
+                ("openai", "gpt-4o", 0.65),
+            ]
+        
+        click.echo(f"\nTop suggestions:\n")
+        
+        for i, (provider, model, score) in enumerate(suggestions, 1):
+            click.echo(f"{i}. {provider}/{model}")
+            click.echo(f"   Relevance: {score:.0%}")
+            
+            # Try to load and show snippet
+            try:
+                installer = PromptInstaller()
+                prompt = installer.load_prompt(provider, model)
+                snippet = prompt[:100].replace('\n', ' ')
+                click.echo(f"   Preview: {snippet}...")
+            except:
+                pass
+            
+            click.echo()
+        
+        click.echo("💡 Use with 'agiterminal build':")
+        click.echo(f"   agiterminal build --provider {suggestions[0][0]} \\")
+        click.echo(f"       --model {suggestions[0][1]} \\")
+        click.echo(f"       --use-case \"{use_case}\" \\")
+        click.echo(f"       --output my-prompt.md")
+        
+    except Exception as e:
+        click.echo(f"❌ Error: {e}", err=True)
+        raise click.Exit(1)
 
 
 if __name__ == '__main__':
