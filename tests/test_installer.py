@@ -9,6 +9,7 @@ import json
 import pytest
 from pathlib import Path
 
+from agiterminal import _paths
 from agiterminal.installer import PromptInstaller, FormattedPrompt
 
 
@@ -25,21 +26,19 @@ class TestPromptInstaller:
 
     def test_sanitize_path_component(self):
         """Test path component sanitization for security."""
-        installer = PromptInstaller()
-
         # Test normal paths
-        assert installer._sanitize_path_component("kimi") == "kimi"
-        assert installer._sanitize_path_component("base-chat") == "base-chat"
-        assert installer._sanitize_path_component("gpt-4.5") == "gpt-4.5"
+        assert _paths.sanitize_path_component("kimi") == "kimi"
+        assert _paths.sanitize_path_component("base-chat") == "base-chat"
+        assert _paths.sanitize_path_component("gpt-4.5") == "gpt-4.5"
 
         # Test path traversal attempts
-        assert installer._sanitize_path_component("../../../etc/passwd") == "etcpasswd"
-        assert installer._sanitize_path_component("..\\windows\\system") == "windowssystem"
-        assert installer._sanitize_path_component("/absolute/path") == "absolutepath"
+        assert _paths.sanitize_path_component("../../../etc/passwd") == "etcpasswd"
+        assert _paths.sanitize_path_component("..\\windows\\system") == "windowssystem"
+        assert _paths.sanitize_path_component("/absolute/path") == "absolutepath"
 
         # Test injection attempts
-        assert installer._sanitize_path_component("model;rm -rf") == "modelrm-rf"
-        assert installer._sanitize_path_component("model$(whoami)") == "modelwhoami"
+        assert _paths.sanitize_path_component("model;rm -rf") == "modelrm-rf"
+        assert _paths.sanitize_path_component("model$(whoami)") == "modelwhoami"
 
     def test_validate_format_type(self):
         """Test format type validation."""

@@ -15,6 +15,7 @@ from pathlib import Path
 from typing import Optional
 
 from agiterminal import __version__
+from agiterminal import _paths
 from agiterminal.analyzer import SystemPromptAnalyzer
 from agiterminal.comparator import MultiModelComparator
 from agiterminal.benchmark import PromptBenchmark, AbstractionLevel
@@ -449,19 +450,19 @@ def list_models():
         agiterminal list-models
     """
     click.echo("📚 Available Models in Collection\n")
-    
-    base_path = Path(__file__).parent.parent.parent / "collections"
+
+    base_path = _paths.get_collections_path()
     if not base_path.exists():
         click.echo("❌ collections/ directory not found", err=True)
         sys.exit(1)
-    
+
     for provider_dir in sorted(base_path.iterdir()):
         if provider_dir.is_dir() and not provider_dir.name.startswith('.'):
             click.echo(f"\n{provider_dir.name.upper()}/")
-            
+
             md_files = list(provider_dir.glob("*.md"))
             md_files = [f for f in md_files if f.name != "README.md"]
-            
+
             for model_file in sorted(md_files):
                 model_name = model_file.stem
                 click.echo(f"  • {model_name}")

@@ -79,7 +79,7 @@ jobs:
     - name: Check documentation
       run: |
         # Check that all docs have educational context
-        for file in docs/README.md docs/architecture/OVERVIEW.md docs/architecture/METHODOLOGY.md docs/GLOSSARY.md; do
+        for file in docs/architecture/OVERVIEW.md docs/architecture/METHODOLOGY.md docs/GLOSSARY.md; do
           if [ -f "$file" ]; then
             if ! grep -qi "educational" "$file"; then
               echo "⚠️ Warning: $file may be missing educational framing"

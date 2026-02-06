@@ -30,7 +30,7 @@ class TestSystemPromptAnalyzer:
         # Create a temporary collections directory
         prompts_dir = tmp_path / "collections" / "test"
         prompts_dir.mkdir(parents=True)
-        
+
         prompt_file = prompts_dir / "model.md"
         prompt_file.write_text("""# Test Model
 
@@ -49,19 +49,16 @@ You are a helpful assistant.
 
 Test analysis.
 """)
-        
-        # Create a fake package structure so Path(__file__).parent.parent.parent
-        # resolves to tmp_path (which contains our collections/ dir)
-        fake_pkg = tmp_path / "src" / "agiterminal"
-        fake_pkg.mkdir(parents=True, exist_ok=True)
-        fake_file = fake_pkg / "analyzer.py"
-        fake_file.touch()
 
-        monkeypatch.setattr("agiterminal.analyzer.__file__", str(fake_file))
+        # Monkeypatch the shared _paths module to use tmp_path for collections
+        monkeypatch.setattr(
+            "agiterminal._paths.get_collections_path",
+            lambda: tmp_path / "collections"
+        )
 
         analyzer = SystemPromptAnalyzer()
         content = analyzer.load_prompt("test", "model")
-        
+
         assert "You are a helpful assistant" in content
         assert analyzer.provider == "test"
         assert analyzer.model_id == "model"

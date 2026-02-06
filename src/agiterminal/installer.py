@@ -13,6 +13,8 @@ from pathlib import Path
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass
 
+from . import _paths
+
 
 @dataclass
 class FormattedPrompt:
@@ -213,64 +215,29 @@ print(result["choices"][0]["message"]["content"])
     def list_providers(collections_path: Optional[Path] = None) -> List[str]:
         """
         List all available providers in the collections directory.
-        
+
         Args:
             collections_path: Optional path to collections directory
-            
+
         Returns:
             List of provider directory names
         """
-        if collections_path is None:
-            collections_path = Path(__file__).parent.parent.parent / "collections"
-        
-        providers = []
-        if collections_path.exists():
-            for item in collections_path.iterdir():
-                if item.is_dir() and item.name != "docs":
-                    providers.append(item.name)
-        return sorted(providers)
-    
+        return _paths.list_providers(collections_path)
+
     @staticmethod
     def list_models(provider: str, collections_path: Optional[Path] = None) -> List[str]:
         """
         List all available models for a given provider.
-        
+
         Args:
             provider: Provider name
             collections_path: Optional path to collections directory
-            
+
         Returns:
             List of model file names (without .md extension)
         """
-        if collections_path is None:
-            collections_path = Path(__file__).parent.parent.parent / "collections"
-        
-        provider_path = collections_path / provider
-        if not provider_path.exists():
-            return []
-        
-        models = []
-        for item in provider_path.iterdir():
-            if item.is_file() and item.suffix == '.md':
-                models.append(item.stem)
-        return sorted(models)
-    
-    def _sanitize_path_component(self, component: str) -> str:
-        """
-        Sanitize a path component to prevent path traversal attacks.
-        
-        Args:
-            component: The path component to sanitize
-            
-        Returns:
-            Sanitized component safe for path construction
-        """
-        # Remove any path separators and parent directory references
-        sanitized = component.replace('/', '').replace('\\', '').replace('..', '')
-        # Remove any remaining dangerous characters
-        sanitized = ''.join(c for c in sanitized if c.isalnum() or c in '-_.')
-        return sanitized
-    
+        return _paths.list_models(provider, collections_path)
+
     def _validate_format_type(self, format_type: str) -> str:
         """
         Validate and normalize format type.
@@ -295,106 +262,51 @@ print(result["choices"][0]["message"]["content"])
     def load_prompt(self, provider: str, model: str) -> str:
         """
         Load a system prompt from the local collection.
-        
+
         Args:
             provider: Provider name (e.g., 'openai', 'anthropic', 'kimi')
             model: Model identifier (e.g., 'gpt-4.5', 'claude-3.7')
-            
+
         Returns:
             The extracted system prompt content
-            
+
         Raises:
             FileNotFoundError: If prompt file doesn't exist
             ValueError: If provider or model contains invalid characters
-            
+
         Example:
             >>> installer = PromptInstaller()
             >>> prompt = installer.load_prompt("kimi", "base-chat")
             >>> print(f"Loaded {len(prompt)} characters")
         """
-        # Validate and sanitize inputs to prevent path traversal
-        provider = self._sanitize_path_component(provider)
-        model = self._sanitize_path_component(model)
-        
-        if not provider or not model:
-            raise ValueError("Provider and model must not be empty after sanitization")
-        
-        self.provider = provider
-        self.model_id = model
-        
-        # Build safe paths within the project directory
-        base_path = Path(__file__).parent.parent.parent / "collections"
-        
-        # Try different file path patterns
-        possible_paths = [
-            base_path / provider / f"{model}.md",
-            base_path / provider / f"{model.replace('-', '_')}.md",
-            base_path / provider / f"{model.replace('_', '-')}.md",
-        ]
-        
-        prompt_path = None
-        for path in possible_paths:
-            # Ensure the resolved path is still within collections
-            try:
-                resolved = path.resolve()
-                base_resolved = base_path.resolve()
-                if not str(resolved).startswith(str(base_resolved)):
-                    continue  # Path traversal attempt detected
-                if resolved.exists():
-                    prompt_path = resolved
-                    break
-            except (OSError, ValueError):
-                continue
-        
-        if not prompt_path:
-            raise FileNotFoundError(
-                f"Prompt not found for {provider}/{model}. "
-                f"Tried: {[str(p) for p in possible_paths]}"
-            )
-        
-        content = prompt_path.read_text(encoding='utf-8')
+        self.provider = _paths.sanitize_path_component(provider)
+        self.model_id = _paths.sanitize_path_component(model)
+
+        content = _paths.load_prompt_file(provider, model)
         self.raw_content = content
-        
-        # Extract clean prompt
-        self.system_prompt = self.extract_clean_prompt(content)
+
+        self.system_prompt = _paths.extract_system_prompt(content)
         return self.system_prompt
     
     def extract_clean_prompt(self, content: str) -> str:
         """
         Extract just the system prompt text from markdown content.
-        
+
         Removes metadata headers, extracts content from "## System Prompt"
         section, and strips unnecessary formatting.
-        
+
         Args:
             content: The raw markdown content
-            
+
         Returns:
             Clean system prompt text
-            
+
         Example:
             >>> installer = PromptInstaller()
             >>> content = Path("prompt.md").read_text()
             >>> clean = installer.extract_clean_prompt(content)
         """
-        # Extract prompt from markdown (between ## System Prompt markers if present)
-        if "## System Prompt" in content:
-            parts = content.split("## System Prompt")
-            if len(parts) > 1:
-                # Get content until next major heading or end
-                prompt_part = parts[1]
-                for separator in ["\n---\n", "\n## "]:
-                    if separator in prompt_part:
-                        prompt_part = prompt_part.split(separator)[0]
-                        break
-                return prompt_part.strip()
-        
-        # If no markers found, use full content (minus any header)
-        lines = content.split('\n')
-        if lines and lines[0].startswith('#'):
-            content = '\n'.join(lines[1:]).strip()
-        
-        return content.strip()
+        return _paths.extract_system_prompt(content)
     
     def format_output(self, format_type: str) -> Union[str, Dict[str, Any]]:
         """
@@ -520,7 +432,7 @@ print(result["choices"][0]["message"]["content"])
             raise ValueError("No system prompt loaded. Call load_prompt() first.")
         
         # Sanitize provider name
-        provider = self._sanitize_path_component(provider.lower())
+        provider = _paths.sanitize_path_component(provider.lower())
         
         # Get the appropriate template
         template = self.INTEGRATION_EXAMPLES.get(
@@ -620,8 +532,8 @@ print(result["choices"][0]["message"]["content"])
                     self.load_prompt(provider, model)
                     
                     # Create filename
-                    safe_provider = self._sanitize_path_component(provider)
-                    safe_model = self._sanitize_path_component(model)
+                    safe_provider = _paths.sanitize_path_component(provider)
+                    safe_model = _paths.sanitize_path_component(model)
                     filename = f"{safe_provider}_{safe_model}.{format_type if format_type != 'raw' else 'txt'}"
                     filepath = output_dir / filename
                     

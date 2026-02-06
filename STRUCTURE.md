@@ -2,7 +2,7 @@
 
 ## Overview
 
-Educational research platform for analyzing AI system prompts across 40+ providers.
+Educational research platform for analyzing AI system prompts across 41+ providers.
 
 ## Directory Layout
 
@@ -14,7 +14,7 @@ AgiTerminal/
 ├── requirements.txt            # Dependencies
 ├── .env.example                # Environment variables template
 │
-├── collections/                # 📚 System Prompt Collection (40 providers)
+├── collections/                # System Prompt Collection (41 providers)
 │   ├── docs/                  # Collection documentation
 │   │   ├── README.md
 │   │   └── EXTRACTION.md
@@ -27,9 +27,9 @@ AgiTerminal/
 │   ├── devin/                 # Devin AI prompts
 │   ├── windsurf/              # Windsurf IDE prompts
 │   ├── vscode-agent/          # VSCode AI agent prompts
-│   └── [35 more providers...] # See collections/ for full list
+│   └── [31 more providers...] # See collections/ for full list
 │
-├── docs/                       # 📖 Documentation
+├── docs/                       # Documentation
 │   ├── CONTRIBUTING.md
 │   ├── GETTING_STARTED.md
 │   ├── ETHICS.md
@@ -42,7 +42,7 @@ AgiTerminal/
 │       ├── INDEX.md
 │       └── EDUCATIONAL_JOURNEY.md
 │
-├── prompts/                    # 🧪 Research Framework
+├── prompts/                    # Research Framework
 │   ├── base/                  # Base prompt templates
 │   │   └── BASE.md
 │   ├── testing/               # 5-Level Testing Framework
@@ -59,38 +59,44 @@ AgiTerminal/
 │       ├── INSTRUCTIVE.md
 │       └── README.md
 │
-├── src/                        # 🐍 Python Package
+├── src/                        # Python Package
 │   └── agiterminal/
 │       ├── __init__.py
 │       ├── __main__.py        # Module entry point
+│       ├── _paths.py          # Shared path utilities
 │       ├── cli.py             # Command-line interface
 │       ├── analyzer.py        # System prompt analysis
 │       ├── comparator.py      # Cross-model comparison
 │       ├── benchmark.py       # Testing framework
-│       └── validator.py       # Content validation
+│       ├── validator.py       # Content validation
+│       ├── installer.py       # Prompt export/installation
+│       └── prompt_builder.py  # Prompt customization engine
 │
-├── examples/                   # 💡 Example Scripts
+├── examples/                   # Example Scripts
 │   ├── analyze_prompt.py      # Basic analysis example
+│   ├── build_custom_prompt.py # Build customization workflow
 │   ├── compare_providers.py   # Comparison example
 │   └── educational_analysis.py # Full framework demo
 │
-├── tests/                      # 🧪 Test Suite
+├── tests/                      # Test Suite
 │   ├── __init__.py
 │   ├── test_analyzer.py
-│   └── test_comparator.py
+│   ├── test_comparator.py
+│   ├── test_installer.py
+│   └── test_prompt_builder.py
 │
-├── .github/workflows/          # ⚙️ CI/CD
+├── .github/workflows/          # CI/CD
 │   └── ci.yml
 │
-└── .planning/                  # 📋 Project Planning
+└── .planning/                  # Project Planning
     ├── AGITERMINAL_ROADMAP.md
     └── ARCHIVE/
 ```
 
 ## Key Statistics
 
-- **40 AI Providers** in collections/
-- **100+ System Prompts** analyzed
+- **41 AI Providers** in collections/
+- **96 System Prompts** analyzed
 - **5-Level Testing Framework** for educational research
 - **4 Behavioral Analysis Modes** for response pattern study
 - **Python Package** with CLI and programmatic API
