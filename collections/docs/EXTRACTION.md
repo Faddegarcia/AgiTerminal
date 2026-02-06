@@ -407,7 +407,7 @@ done
 #!/bin/bash
 # rebuild_collection.sh
 
-BASE_DIR="/Users/bao/Projects/AgiTerminal/opensourced_repo/collections"
+BASE_DIR="./collections"
 
 echo "Rebuilding AgiTerminal System Prompts Collection"
 

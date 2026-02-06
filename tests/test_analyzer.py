@@ -50,15 +50,15 @@ You are a helpful assistant.
 Test analysis.
 """)
         
-        # Monkeypatch the path lookup
-        original_path = Path
-        def mock_path(*args):
-            if str(args[0]).startswith("collections"):
-                return original_path(tmp_path / args[0])
-            return original_path(*args)
-        
-        monkeypatch.setattr("agiterminal.analyzer.Path", mock_path)
-        
+        # Create a fake package structure so Path(__file__).parent.parent.parent
+        # resolves to tmp_path (which contains our collections/ dir)
+        fake_pkg = tmp_path / "src" / "agiterminal"
+        fake_pkg.mkdir(parents=True, exist_ok=True)
+        fake_file = fake_pkg / "analyzer.py"
+        fake_file.touch()
+
+        monkeypatch.setattr("agiterminal.analyzer.__file__", str(fake_file))
+
         analyzer = SystemPromptAnalyzer()
         content = analyzer.load_prompt("test", "model")
         

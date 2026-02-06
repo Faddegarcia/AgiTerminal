@@ -395,7 +395,7 @@ class MultiModelComparator:
             # Compatibility matrix
             lines.append("## Compatibility Matrix\n")
             lines.append("| Model | " + " | ".join(comparison.models) + " |")
-            lines.append("|" + "-" * 20 + "|" * len(comparison.models))
+            lines.append("| " + " | ".join(["---"] * (len(comparison.models) + 1)) + " |")
             for m1 in comparison.models:
                 row = f"| {m1} |"
                 for m2 in comparison.models:

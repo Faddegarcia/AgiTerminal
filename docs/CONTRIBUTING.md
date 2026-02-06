@@ -84,7 +84,7 @@ Template for new system prompts:
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/AgiTerminal.git
+git clone https://github.com/Faddegarcia/AgiTerminal.git
 cd AgiTerminal
 
 # Create virtual environment
@@ -181,7 +181,7 @@ test(benchmark): add tests for level 4 abstraction
 3. Include educational applications
 4. Run validation:
    ```bash
-   python -m src.agiterminal.cli validate --file collections/{provider}/{model}.md
+   agiterminal validate --file collections/{provider}/{model}.md
    ```
 
 ### Testing

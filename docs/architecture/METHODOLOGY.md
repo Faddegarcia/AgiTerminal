@@ -242,7 +242,7 @@ If referencing this educational framework:
   title={AgiTerminal: Educational Framework for AI System Prompt Research},
   year={2026},
   note={Theoretical projections for educational purposes only},
-  howpublished={\url{https://github.com/yourusername/AgiTerminal}}
+  howpublished={\url{https://github.com/Faddegarcia/AgiTerminal}}
 }
 ```
 

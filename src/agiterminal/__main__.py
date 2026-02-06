@@ -1,6 +1,6 @@
 """Entry point for running agiterminal as a module."""
 
-from agiterminal.cli import cli
+from .cli import cli
 
 if __name__ == "__main__":
     cli()

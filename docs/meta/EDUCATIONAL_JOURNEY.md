@@ -217,7 +217,7 @@ To publish this educational framework:
 
 ```bash
 # Ensure you're in the repository
-cd /Users/bao/Projects/opensourced_repo
+cd /path/to/AgiTerminal
 
 # Verify remote is set correctly
 git remote -v

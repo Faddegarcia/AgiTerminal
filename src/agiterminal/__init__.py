@@ -18,8 +18,8 @@ Example:
     >>> matrix = comparator.generate_compatibility_matrix()
 
 For more information, see:
-- Documentation: https://github.com/yourusername/AgiTerminal
-- Educational Resources: https://github.com/yourusername/AgiTerminal/wiki
+- Documentation: https://github.com/Faddegarcia/AgiTerminal
+- Educational Resources: https://github.com/Faddegarcia/AgiTerminal/wiki
 """
 
 __version__ = "0.1.0"

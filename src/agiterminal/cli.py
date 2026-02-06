@@ -3,17 +3,13 @@
 AgiTerminal CLI - Educational tools for AI system prompt research.
 
 Usage:
-    python -m src.agiterminal.cli analyze --provider kimi --model base-chat
-    python -m src.agiterminal.cli compare --prompt1 openai/gpt-4.5 --prompt2 anthropic/claude-sonnet-3.7
-    python -m src.agiterminal.cli validate --directory collections/
-    
-Or after installation:
     agiterminal analyze --provider kimi --model base-chat
+    agiterminal compare --prompt1 openai/gpt-4.5 --prompt2 anthropic/claude-sonnet-3.7
+    agiterminal validate --directory collections/
 """
 
 import click
 import json
-import os
 from pathlib import Path
 from typing import Optional
 
@@ -230,7 +226,7 @@ def benchmark(prompt: str, levels: int, test_cases: Optional[str],
     try:
         prompt_content = Path(prompt).read_text()
         
-        benchmark = PromptBenchmark(levels=levels)
+        prompt_benchmark = PromptBenchmark(levels=levels)
         
         # Use provided or default test cases
         if test_cases:
@@ -254,10 +250,10 @@ def benchmark(prompt: str, levels: int, test_cases: Optional[str],
         for case in cases:
             for level_value in range(levels):
                 level = AbstractionLevel(level_value)
-                modified = benchmark.apply_abstraction(case, level)
-                
+                modified = prompt_benchmark.apply_abstraction(case, level)
+
                 # Simulate results based on theoretical projections
-                projection = benchmark.theoretical_projections.get(level_value, 0.5)
+                projection = prompt_benchmark.theoretical_projections.get(level_value, 0.5)
                 refused = random.random() > projection
                 
                 result = BenchmarkResult(
@@ -269,9 +265,9 @@ def benchmark(prompt: str, levels: int, test_cases: Optional[str],
                     metadata={"modified_prompt": modified[:100] + "..."}
                 )
                 
-                benchmark.results.append(result)
-        
-        report = benchmark.generate_report()
+                prompt_benchmark.results.append(result)
+
+        report = prompt_benchmark.generate_report()
         
         lines = [
             f"\n{'='*60}",
@@ -453,7 +449,7 @@ def list_models():
     """
     click.echo("📚 Available Models in Collection\n")
     
-    base_path = Path("collections")
+    base_path = Path(__file__).parent.parent.parent / "collections"
     if not base_path.exists():
         click.echo("❌ collections/ directory not found", err=True)
         raise click.Exit(1)
@@ -759,7 +755,7 @@ def suggest_template(use_case: str):
                 prompt = installer.load_prompt(provider, model)
                 snippet = prompt[:100].replace('\n', ' ')
                 click.echo(f"   Preview: {snippet}...")
-            except:
+            except Exception:
                 pass
             
             click.echo()

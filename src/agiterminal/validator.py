@@ -285,7 +285,7 @@ class EducationalValidator:
         lines.append(f"- Total Files: {total}")
         lines.append(f"- Valid: {valid}")
         lines.append(f"- Invalid: {invalid}")
-        lines.append(f"- Pass Rate: {valid/total*100:.1f}%\n")
+        lines.append(f"- Pass Rate: {valid/total*100:.1f}%\n" if total > 0 else "- Pass Rate: N/A (no files)\n")
         
         # Invalid files
         if invalid > 0:

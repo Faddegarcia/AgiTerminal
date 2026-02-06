@@ -9,10 +9,9 @@ researchers to study and test system prompts across different providers.
 """
 
 import json
-import re
 from pathlib import Path
 from typing import Dict, List, Optional, Any, Union
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass
 
 
 @dataclass
@@ -68,14 +67,14 @@ client = openai.OpenAI(api_key="your-api-key")
 response = client.chat.completions.create(
     model="{model}",
     messages=[
-        {{
+        {
             "role": "system",
             "content": """{system_prompt}"""
-        }},
-        {{
+        },
+        {
             "role": "user",
             "content": "Your question here"
-        }}
+        }
     ]
 )
 
@@ -93,10 +92,10 @@ response = client.messages.create(
     max_tokens=4096,
     system="""{system_prompt}""",
     messages=[
-        {{
+        {
             "role": "user",
             "content": "Your question here"
-        }}
+        }
     ]
 )
 
@@ -115,14 +114,14 @@ client = OpenAI(
 response = client.chat.completions.create(
     model="{model}",
     messages=[
-        {{
+        {
             "role": "system",
             "content": """{system_prompt}"""
-        }},
-        {{
+        },
+        {
             "role": "user",
             "content": "Your question here"
-        }}
+        }
     ]
 )
 
@@ -158,14 +157,14 @@ client = OpenAI(
 response = client.chat.completions.create(
     model="meta-llama/{model}",
     messages=[
-        {{
+        {
             "role": "system",
             "content": """{system_prompt}"""
-        }},
-        {{
+        },
+        {
             "role": "user",
             "content": "Your question here"
-        }}
+        }
     ]
 )
 
@@ -177,23 +176,23 @@ import requests
 
 response = requests.post(
     "https://api.provider.com/v1/chat/completions",
-    headers={{
+    headers={
         "Authorization": "Bearer your-api-key",
         "Content-Type": "application/json"
-    }},
-    json={{
+    },
+    json={
         "model": "{model}",
         "messages": [
-            {{
+            {
                 "role": "system",
                 "content": """{system_prompt}"""
-            }},
-            {{
+            },
+            {
                 "role": "user",
                 "content": "Your question here"
-            }}
+            }
         ]
-    }}
+    }
 )
 
 result = response.json()
@@ -529,12 +528,10 @@ print(result["choices"][0]["message"]["content"])
             self.INTEGRATION_EXAMPLES["default"]
         )
         
-        # Fill in the template
-        example = template.format(
-            provider=provider,
-            model=self.model_id or "model-name",
-            system_prompt=self.system_prompt
-        )
+        # Fill in the template using replace() to avoid crash on { in prompts
+        example = template.replace("{provider}", provider)
+        example = example.replace("{model}", self.model_id or "model-name")
+        example = example.replace("{system_prompt}", self.system_prompt)
         
         return example.strip()
     

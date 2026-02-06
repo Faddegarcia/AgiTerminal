@@ -10,7 +10,7 @@ Welcome to AgiTerminal! This guide will help you get up and running with the edu
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/AgiTerminal.git
+git clone https://github.com/Faddegarcia/AgiTerminal.git
 cd AgiTerminal
 
 # Install the package
@@ -57,7 +57,7 @@ pip install agiterminal
 For contributing or extending:
 
 ```bash
-git clone https://github.com/yourusername/AgiTerminal.git
+git clone https://github.com/Faddegarcia/AgiTerminal.git
 cd AgiTerminal
 pip install -e ".[dev]"
 ```

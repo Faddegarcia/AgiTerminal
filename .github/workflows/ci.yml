@@ -62,7 +62,7 @@ jobs:
 
     - name: Validate system prompts
       run: |
-        python -m src.agiterminal.cli validate --directory collections/ --output validation-report.md
+        agiterminal validate --directory collections/ --output validation-report.md
 
     - name: Upload validation report
       uses: actions/upload-artifact@v4

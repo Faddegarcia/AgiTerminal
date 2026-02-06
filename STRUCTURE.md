@@ -155,19 +155,19 @@ suggestions = comparator.suggest_alternative_models({
 
 ```bash
 # List all available models
-python -m src.agiterminal.cli list-models
+agiterminal list-models
 
 # Analyze a specific prompt
-python -m src.agiterminal.cli analyze --provider kimi --model base-chat
+agiterminal analyze --provider kimi --model base-chat
 
 # Compare two prompts
-python -m src.agiterminal.cli compare --prompt1 openai/gpt-4o --prompt2 kimi/base-chat
+agiterminal compare --prompt1 openai/gpt-4o --prompt2 kimi/base-chat
 
 # Validate content
-python -m src.agiterminal.cli validate --directory collections/
+agiterminal validate --directory collections/
 
 # Find compatible models
-python -m src.agiterminal.cli suggest --capabilities code,analysis
+agiterminal suggest --capabilities code,analysis
 ```
 
 ## Educational Purpose
