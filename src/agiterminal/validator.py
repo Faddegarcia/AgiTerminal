@@ -63,7 +63,7 @@ class EducationalValidator:
         "model"
     ]
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the validator."""
         self.errors: List[str] = []
         self.warnings: List[str] = []

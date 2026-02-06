@@ -100,3 +100,6 @@ site/
 # Claude Code plugins/local data
 C:\\Users\\*
 .claude/
+
+# Internal planning
+.planning/

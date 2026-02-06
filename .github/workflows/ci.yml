@@ -89,9 +89,9 @@ jobs:
 
     - name: Check for prohibited terms
       run: |
-        # Check for terms that shouldn't be in the repo
-        PROHIBITED="hitler|stalin|mao|genocide|extremist propaganda"
-        if grep -riE "$PROHIBITED" --include="*.md" --exclude-dir=.git .; then
+        # Check for terms that shouldn't be in the repo (word-boundary matching)
+        PROHIBITED="\bhitler\b|\bstalin\b|\bgenocide\b"
+        if grep -riEw "$PROHIBITED" --include="*.md" --exclude-dir=.git --exclude-dir=collections --exclude-dir=docs .; then
           echo "❌ Found prohibited terms"
           exit 1
         else

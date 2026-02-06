@@ -200,7 +200,7 @@ print(result["choices"][0]["message"]["content"])
 '''
     }
     
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Initialize the installer.
         """
@@ -495,7 +495,7 @@ print(result["choices"][0]["message"]["content"])
         else:
             # Raw text format
             with open(filepath, 'w', encoding='utf-8') as f:
-                f.write(formatted)
+                f.write(str(formatted))
         
         return filepath
     

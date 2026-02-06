@@ -8,6 +8,7 @@ Usage:
     agiterminal validate --directory collections/
 """
 
+import sys
 import click
 import json
 from pathlib import Path
@@ -113,10 +114,10 @@ def analyze(provider: str, model: str, api_key: Optional[str],
             
     except FileNotFoundError as e:
         click.echo(f"❌ Error: {e}", err=True)
-        raise click.Exit(1)
+        sys.exit(1)
     except Exception as e:
         click.echo(f"❌ Error analyzing prompt: {e}", err=True)
-        raise click.Exit(1)
+        sys.exit(1)
 
 
 @cli.command()
@@ -140,7 +141,7 @@ def compare(prompt1: str, prompt2: str, output: Optional[str]):
         
         if not comparator.results:
             click.echo("❌ No prompts could be loaded", err=True)
-            raise click.Exit(1)
+            sys.exit(1)
         
         caps = comparator.compare_capabilities()
         matrix = comparator.generate_compatibility_matrix()
@@ -199,7 +200,7 @@ def compare(prompt1: str, prompt2: str, output: Optional[str]):
             
     except Exception as e:
         click.echo(f"❌ Error comparing prompts: {e}", err=True)
-        raise click.Exit(1)
+        sys.exit(1)
 
 
 @cli.command()
@@ -308,7 +309,7 @@ def benchmark(prompt: str, levels: int, test_cases: Optional[str],
             
     except Exception as e:
         click.echo(f"❌ Error running benchmark: {e}", err=True)
-        raise click.Exit(1)
+        sys.exit(1)
 
 
 @cli.command()
@@ -357,7 +358,7 @@ def suggest(requirements: Optional[str], capabilities: Optional[str]):
         
         if not comparator.results:
             click.echo("❌ No models could be loaded", err=True)
-            raise click.Exit(1)
+            sys.exit(1)
         
         suggestions = comparator.suggest_alternative_models(reqs)
         
@@ -390,7 +391,7 @@ def suggest(requirements: Optional[str], capabilities: Optional[str]):
         
     except Exception as e:
         click.echo(f"❌ Error suggesting models: {e}", err=True)
-        raise click.Exit(1)
+        sys.exit(1)
 
 
 @cli.command()
@@ -422,7 +423,7 @@ def validate(directory: Optional[str], file: Optional[str],
     
     else:
         click.echo("❌ Please specify --directory or --file", err=True)
-        raise click.Exit(1)
+        sys.exit(1)
     
     # Generate report
     report = validator.generate_validation_report(results)
@@ -437,7 +438,7 @@ def validate(directory: Optional[str], file: Optional[str],
     invalid_count = sum(1 for r in results.values() if not r.is_valid)
     if invalid_count > 0:
         click.echo(f"\n⚠️  {invalid_count} file(s) failed validation")
-        raise click.Exit(1)
+        sys.exit(1)
 
 
 @cli.command()
@@ -452,7 +453,7 @@ def list_models():
     base_path = Path(__file__).parent.parent.parent / "collections"
     if not base_path.exists():
         click.echo("❌ collections/ directory not found", err=True)
-        raise click.Exit(1)
+        sys.exit(1)
     
     for provider_dir in sorted(base_path.iterdir()):
         if provider_dir.is_dir() and not provider_dir.name.startswith('.'):
@@ -504,7 +505,7 @@ def install(provider: str, model: str, fmt: str, output: Optional[str],
         except FileNotFoundError:
             click.echo(f"❌ Prompt not found: {provider}/{model}", err=True)
             click.echo("💡 Run 'agiterminal list-models' to see available prompts")
-            raise click.Exit(1)
+            sys.exit(1)
         
         # Format the prompt
         formatted = installer.format_output(fmt)
@@ -555,11 +556,11 @@ def install(provider: str, model: str, fmt: str, output: Optional[str],
             click.echo(f"\n💡 Use --output to save to file, --copy to copy to clipboard")
             click.echo(f"{'='*60}")
             
-    except click.Exit:
+    except SystemExit:
         raise
     except Exception as e:
         click.echo(f"❌ Error installing prompt: {e}", err=True)
-        raise click.Exit(1)
+        sys.exit(1)
 
 
 @cli.command()
@@ -613,7 +614,7 @@ def build(provider: str, model: str, use_case: str, role: Optional[str],
         except FileNotFoundError:
             click.echo(f"❌ Prompt not found: {provider}/{model}", err=True)
             click.echo("💡 Run 'agiterminal list-models' to see available prompts")
-            raise click.Exit(1)
+            sys.exit(1)
         
         # Initialize builder
         builder = PromptBuilder()
@@ -717,7 +718,7 @@ def build(provider: str, model: str, use_case: str, role: Optional[str],
         
     except Exception as e:
         click.echo(f"❌ Error building prompt: {e}", err=True)
-        raise click.Exit(1)
+        sys.exit(1)
 
 
 @cli.command()
@@ -768,7 +769,7 @@ def suggest_template(use_case: str):
         
     except Exception as e:
         click.echo(f"❌ Error: {e}", err=True)
-        raise click.Exit(1)
+        sys.exit(1)
 
 
 if __name__ == '__main__':

@@ -23,7 +23,7 @@ class AbstractionLevel(Enum):
     PHILOSOPHICAL = 3
     PURE_ABSTRACTION = 4
     
-    def __str__(self):
+    def __str__(self) -> str:
         names = {
             0: "Direct",
             1: "Academic",
@@ -147,7 +147,7 @@ class PromptBenchmark:
     async def run_benchmark(
         self,
         test_cases: List[str],
-        test_function,
+        test_function: Any,
         include_projections: bool = True
     ) -> List[BenchmarkResult]:
         """
@@ -232,7 +232,7 @@ class PromptBenchmark:
             refused_count = sum(1 for r in results if r.refused)
             responded = [r for r in results if not r.refused]
             
-            avg_response_length = 0
+            avg_response_length: float = 0
             if responded:
                 avg_response_length = sum(
                     len(r.response) if r.response else 0 

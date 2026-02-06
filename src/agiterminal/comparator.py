@@ -47,7 +47,7 @@ class MultiModelComparator:
         results: Dictionary of analysis results by model name
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the comparator."""
         self.analyzers: Dict[str, SystemPromptAnalyzer] = {}
         self.results: Dict[str, AnalysisResult] = {}
@@ -200,23 +200,25 @@ class MultiModelComparator:
             model_safety[model] = safety
             all_measures.update(safety.keys())
         
-        comparison = {
-            "models": list(self.results.keys()),
-            "all_measure_types": sorted(all_measures),
-            "model_safety": model_safety,
-            "measure_coverage": {}
-        }
-        
+        measure_coverage: Dict[str, Any] = {}
+
         # Calculate coverage for each measure type
         for measure in all_measures:
             coverage = sum(
-                1 for safety in model_safety.values() 
+                1 for safety in model_safety.values()
                 if measure in safety
             )
-            comparison["measure_coverage"][measure] = {
+            measure_coverage[measure] = {
                 "count": coverage,
                 "percentage": round(coverage / len(self.results) * 100, 1)
             }
+
+        comparison: Dict[str, Any] = {
+            "models": list(self.results.keys()),
+            "all_measure_types": sorted(all_measures),
+            "model_safety": model_safety,
+            "measure_coverage": measure_coverage
+        }
         
         return comparison
     
@@ -329,7 +331,7 @@ class MultiModelComparator:
             })
         
         # Sort by match score
-        suggestions.sort(key=lambda x: x["match_score"], reverse=True)
+        suggestions.sort(key=lambda x: float(x["match_score"]), reverse=True)  # type: ignore[arg-type]
         return suggestions
     
     def full_comparison(self) -> ComparisonResult:

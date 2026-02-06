@@ -118,7 +118,7 @@ class PromptBuilder:
         r"(?:friendly|professional|casual|formal|technical|simple)",
     ]
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the prompt builder."""
         self.template_cache: Dict[str, PromptTemplate] = {}
     
@@ -199,7 +199,25 @@ class PromptBuilder:
         """
         template = self.parse_prompt(prompt_text)
         
-        analysis = {
+        opportunities: List[str] = []
+
+        # Suggest customization opportunities
+        if template.role_section:
+            opportunities.append(
+                "Role/persona can be adapted to your specific use case"
+            )
+
+        if template.capability_sections:
+            opportunities.append(
+                f"{len(template.capability_sections)} capability section(s) can be customized"
+            )
+
+        if template.structure_pattern in ["persona_with_capabilities", "sectioned"]:
+            opportunities.append(
+                "Well-structured template - easy to customize sections"
+            )
+
+        analysis: Dict[str, Any] = {
             "provider": provider,
             "model": model,
             "structure": template.structure_pattern,
@@ -207,25 +225,9 @@ class PromptBuilder:
             "detected_capabilities": len(template.capability_sections),
             "detected_constraints": len(template.constraint_sections),
             "tone": template.tone_indicators,
-            "customization_opportunities": [],
+            "customization_opportunities": opportunities,
         }
-        
-        # Suggest customization opportunities
-        if template.role_section:
-            analysis["customization_opportunities"].append(
-                "Role/persona can be adapted to your specific use case"
-            )
-        
-        if template.capability_sections:
-            analysis["customization_opportunities"].append(
-                f"{len(template.capability_sections)} capability section(s) can be customized"
-            )
-        
-        if template.structure_pattern in ["persona_with_capabilities", "sectioned"]:
-            analysis["customization_opportunities"].append(
-                "Well-structured template - easy to customize sections"
-            )
-        
+
         return analysis
     
     def build(self, request: CustomizationRequest, 
