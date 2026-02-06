@@ -86,9 +86,9 @@ class EducationalValidator:
         
         content_lower = content.lower()
         
-        # Check for prohibited terms
+        # Check for prohibited terms (word-boundary matching)
         for term in self.PROHIBITED_TERMS:
-            if term in content_lower:
+            if re.search(r'\b' + re.escape(term) + r'\b', content_lower):
                 self.errors.append(
                     f"Prohibited term found: '{term}'. "
                     "Use fictional alternatives (Star Wars, 1984, etc.)"
